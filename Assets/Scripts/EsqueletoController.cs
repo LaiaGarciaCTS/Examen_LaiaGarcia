@@ -11,7 +11,7 @@ private Rigidbody2D rBody2D;
 public Vector3 cameraOffset;
 public Vector3 minCameraPosition;
 public Vector3 maxCameraPosition;
-public GameObject cameraTarget;
+//public GameObject cameraTarget;
 
 
 //Movimiento y direccion
@@ -33,6 +33,7 @@ private Animator animator;
 
 //Salto
 private InputAction jumpAction;
+public float jumpForce = 10;
 
 //Salto NO infinito
 private GroundSensor sensor;
@@ -82,6 +83,8 @@ void Start()
     moveDirection = moveAction.ReadValue<Vector2>();
 
     transform.position = new Vector3(transform.position.x + moveDirection.x * movementSpeed * Time.deltaTime, transform.position.y, transform.position.z);
+
+    rBody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
 }
 
 
@@ -89,7 +92,7 @@ void Update()
 {
     transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x + direction, transform.position.y), movementSpeed * Time.deltaTime);
 
-    transform.position = new Vector3(cameraTarget.position.x, 0, 0) + cameraOffset;
+    //transform.position = new Vector3(cameraTarget.position.x, 0, 0) + cameraOffset;
 }
 
 
@@ -98,7 +101,7 @@ void FixedUpdate()
     rBody2D.linearVelocity = new Vector2(moveDirection.x * movementSpeed, rBody2D.linearVelocity.y);
 }
 
-
+/*
 //Salto NO infinito
 void OnTriggerEnter2D(Collider2D collision)
 {
