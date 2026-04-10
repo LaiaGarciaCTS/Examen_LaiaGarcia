@@ -1,0 +1,1157 @@
+fileFormatVersion: 2
+guid: 7caf025c9bd08d34184922726ba0ec4f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5135766725301287055
+    second: DeadProtaDown_0
+  - first:
+      213: -7943140203288413415
+    second: DeadProtaDown_1
+  - first:
+      213: -5726895304075048761
+    second: DeadProtaDown_2
+  - first:
+      213: -8040994536050330692
+    second: DeadProtaDown_3
+  - first:
+      213: 6288107706634848771
+    second: DeadProtaDown_4
+  - first:
+      213: 1580876202432509847
+    second: DeadProtaDown_5
+  - first:
+      213: -7377261314242049015
+    second: DeadProtaDown_6
+  - first:
+      213: 2486211222695789992
+    second: DeadProtaDown_7
+  - first:
+      213: -1235327456039492505
+    second: DeadProtaDown_8
+  - first:
+      213: 7448162465653395598
+    second: DeadProtaDown_9
+  - first:
+      213: -8326644822991073503
+    second: DeadProtaDown_10
+  - first:
+      213: -7788671769258659172
+    second: DeadProtaDown_11
+  - first:
+      213: -6934969218148184085
+    second: DeadProtaDown_12
+  - first:
+      213: 6803126577672424630
+    second: DeadProtaDown_13
+  - first:
+      213: 2388475716009328822
+    second: DeadProtaDown_14
+  - first:
+      213: 8245274098071521596
+    second: DeadProtaDown_15
+  - first:
+      213: 5345672592231758976
+    second: DeadProtaDown_16
+  - first:
+      213: 6294373906836448098
+    second: DeadProtaDown_17
+  - first:
+      213: 6543935686496616283
+    second: DeadProtaDown_18
+  - first:
+      213: -5962400750575583239
+    second: DeadProtaDown_19
+  - first:
+      213: 2295995125589333142
+    second: DeadProtaDown_20
+  - first:
+      213: -8383341952286124588
+    second: DeadProtaDown_21
+  - first:
+      213: -6607513053654044400
+    second: DeadProtaDown_22
+  - first:
+      213: -4720614790286206250
+    second: DeadProtaDown_23
+  - first:
+      213: 5195023819793926323
+    second: DeadProtaDown_24
+  - first:
+      213: -4128841543802043131
+    second: DeadProtaDown_25
+  - first:
+      213: 7434733349960638434
+    second: DeadProtaDown_26
+  - first:
+      213: 4398648258173720067
+    second: DeadProtaDown_27
+  - first:
+      213: -4156111138478852590
+    second: DeadProtaDown_28
+  - first:
+      213: -675005643861695429
+    second: DeadProtaDown_29
+  - first:
+      213: 6365762338561630669
+    second: DeadProtaDown_30
+  - first:
+      213: 780309306122672306
+    second: DeadProtaDown_31
+  - first:
+      213: 5090233074847788911
+    second: DeadProtaDown_32
+  - first:
+      213: -2852702374459495078
+    second: DeadProtaDown_33
+  - first:
+      213: 4506834508619573776
+    second: DeadProtaDown_34
+  - first:
+      213: -4844901252461578403
+    second: DeadProtaDown_35
+  - first:
+      213: -5774275455512393088
+    second: DeadProtaDown_36
+  - first:
+      213: -4066823679601045581
+    second: DeadProtaDown_37
+  - first:
+      213: 3620832492402355666
+    second: DeadProtaDown_38
+  - first:
+      213: -4800037341219617436
+    second: DeadProtaDown_39
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 30
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: DeadProtaDown_0
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 449
+        width: 28
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1774521bf571ab8b0800000000000000
+      internalID: -5135766725301287055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadProtaDown_1
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 450
+        width: 27
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91bbed5d11c44c190800000000000000
+      internalID: -7943140203288413415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadProtaDown_2
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 449
+        width: 28
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c801c6301bf580b0800000000000000
+      internalID: -5726895304075048761
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadProtaDown_3
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 450
+        width: 26
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb3fcdd8216a86090800000000000000
+      internalID: -8040994536050330692
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadProtaDown_4
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 450
+        width: 32
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 30acd53b4a8d34750800000000000000
+      internalID: 6288107706634848771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadProtaDown_5
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 385
+        width: 27
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 797bbdfb78660f510800000000000000
+      internalID: 1580876202432509847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadProtaDown_6
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 386
+        width: 27
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90c0f5dcbe3be9990800000000000000
+      internalID: -7377261314242049015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadProtaDown_7
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 385
+        width: 27
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a54f5d3febc08220800000000000000
+      internalID: 2486211222695789992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadProtaDown_8
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 386
+        width: 27
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 764aa79493c3bdee0800000000000000
+      internalID: -1235327456039492505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadProtaDown_9
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 386
+        width: 33
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e801baaec403d5760800000000000000
+      internalID: 7448162465653395598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadProtaDown_10
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 321
+        width: 27
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12f85c266a0d17c80800000000000000
+      internalID: -8326644822991073503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadProtaDown_11
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 322
+        width: 27
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c927931ca4419e390800000000000000
+      internalID: -7788671769258659172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadProtaDown_12
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 321
+        width: 27
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bef42083d3a02cf90800000000000000
+      internalID: -6934969218148184085
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadProtaDown_13
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 322
+        width: 26
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6bc0f20f39f896e50800000000000000
+      internalID: 6803126577672424630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadProtaDown_14
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 332
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b0026f4202952120800000000000000
+      internalID: 2388475716009328822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadProtaDown_15
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 257
+        width: 27
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c39484b5b191d6270800000000000000
+      internalID: 8245274098071521596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadProtaDown_16
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 258
+        width: 27
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08cf38966e4af2a40800000000000000
+      internalID: 5345672592231758976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadProtaDown_17
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 257
+        width: 27
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 263697028bb1a5750800000000000000
+      internalID: 6294373906836448098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadProtaDown_18
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 258
+        width: 27
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5ff1aae5dab0da50800000000000000
+      internalID: 6543935686496616283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadProtaDown_19
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 270
+        width: 29
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ff7b658b1c414da0800000000000000
+      internalID: -5962400750575583239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadProtaDown_20
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 193
+        width: 27
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 694d7cae6630ddf10800000000000000
+      internalID: 2295995125589333142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadProtaDown_21
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 194
+        width: 27
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d51b5749e268ab80800000000000000
+      internalID: -8383341952286124588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadProtaDown_22
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 193
+        width: 27
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 011b134c2e56d44a0800000000000000
+      internalID: -6607513053654044400
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadProtaDown_23
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 194
+        width: 27
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6da198febd10d7eb0800000000000000
+      internalID: -4720614790286206250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadProtaDown_24
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 205
+        width: 33
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b88282c3ae681840800000000000000
+      internalID: 5195023819793926323
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadProtaDown_25
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 130
+        width: 27
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 505cdcfcd7863b6c0800000000000000
+      internalID: -4128841543802043131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadProtaDown_26
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 130
+        width: 27
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ef5724479a7d2760800000000000000
+      internalID: 7434733349960638434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadProtaDown_27
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 129
+        width: 27
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 306d55829432b0d30800000000000000
+      internalID: 4398648258173720067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadProtaDown_28
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 130
+        width: 31
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2167ce780f68256c0800000000000000
+      internalID: -4156111138478852590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadProtaDown_29
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 130
+        width: 33
+        height: 38
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b346d3871f5e1a6f0800000000000000
+      internalID: -675005643861695429
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadProtaDown_30
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 66
+        width: 27
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc1a682ae1bb75850800000000000000
+      internalID: 6365762338561630669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadProtaDown_31
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 66
+        width: 27
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b89f5efd2734da00800000000000000
+      internalID: 780309306122672306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadProtaDown_32
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 65
+        width: 27
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6f2f3a230424a640800000000000000
+      internalID: 5090233074847788911
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadProtaDown_33
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 66
+        width: 27
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5dad600e4a2968d0800000000000000
+      internalID: -2852702374459495078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadProtaDown_34
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 66
+        width: 33
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01aedbb7b1e7b8e30800000000000000
+      internalID: 4506834508619573776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadProtaDown_35
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 1
+        width: 27
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d57be23faf373ccb0800000000000000
+      internalID: -4844901252461578403
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadProtaDown_36
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 2
+        width: 27
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08a4dee0117addfa0800000000000000
+      internalID: -5774275455512393088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadProtaDown_37
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 1
+        width: 27
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3bf8b3d096dbf87c0800000000000000
+      internalID: -4066823679601045581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadProtaDown_38
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 2
+        width: 29
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2dda5d4c7f7cf3230800000000000000
+      internalID: 3620832492402355666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeadProtaDown_39
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 2
+        width: 32
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4658ef74877d26db0800000000000000
+      internalID: -4800037341219617436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: caa7f6cc764f9c441b13851147f3843c
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      DeadProtaDown_0: -5135766725301287055
+      DeadProtaDown_1: -7943140203288413415
+      DeadProtaDown_10: -8326644822991073503
+      DeadProtaDown_11: -7788671769258659172
+      DeadProtaDown_12: -6934969218148184085
+      DeadProtaDown_13: 6803126577672424630
+      DeadProtaDown_14: 2388475716009328822
+      DeadProtaDown_15: 8245274098071521596
+      DeadProtaDown_16: 5345672592231758976
+      DeadProtaDown_17: 6294373906836448098
+      DeadProtaDown_18: 6543935686496616283
+      DeadProtaDown_19: -5962400750575583239
+      DeadProtaDown_2: -5726895304075048761
+      DeadProtaDown_20: 2295995125589333142
+      DeadProtaDown_21: -8383341952286124588
+      DeadProtaDown_22: -6607513053654044400
+      DeadProtaDown_23: -4720614790286206250
+      DeadProtaDown_24: 5195023819793926323
+      DeadProtaDown_25: -4128841543802043131
+      DeadProtaDown_26: 7434733349960638434
+      DeadProtaDown_27: 4398648258173720067
+      DeadProtaDown_28: -4156111138478852590
+      DeadProtaDown_29: -675005643861695429
+      DeadProtaDown_3: -8040994536050330692
+      DeadProtaDown_30: 6365762338561630669
+      DeadProtaDown_31: 780309306122672306
+      DeadProtaDown_32: 5090233074847788911
+      DeadProtaDown_33: -2852702374459495078
+      DeadProtaDown_34: 4506834508619573776
+      DeadProtaDown_35: -4844901252461578403
+      DeadProtaDown_36: -5774275455512393088
+      DeadProtaDown_37: -4066823679601045581
+      DeadProtaDown_38: 3620832492402355666
+      DeadProtaDown_39: -4800037341219617436
+      DeadProtaDown_4: 6288107706634848771
+      DeadProtaDown_5: 1580876202432509847
+      DeadProtaDown_6: -7377261314242049015
+      DeadProtaDown_7: 2486211222695789992
+      DeadProtaDown_8: -1235327456039492505
+      DeadProtaDown_9: 7448162465653395598
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
