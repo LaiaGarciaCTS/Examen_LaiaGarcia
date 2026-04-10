@@ -45,7 +45,7 @@ public class CharacterController : MonoBehaviour
             if (!tocandoSuelo) //¿Está en el aire?
             {
                 animator.SetBool("Saltar", true);
-                animator.SetBool("Caminar", false); // Apagamos caminar mientras salta
+                animator.SetBool("Caminar", false); // Desactivamos caminar mientras salta
             }
             else //¿Está en el suelo?
             {
@@ -75,73 +75,3 @@ public class CharacterController : MonoBehaviour
         rBody2D.linearVelocity = new Vector2(moveDirection.x * movementSpeed, rBody2D.linearVelocity.y);
     }
 }
-/* EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-
-
-/*Particulas
-private ParticleSystem _walkParticles;
-
-Void Awake()
-{
-    _walkParticles =GetComponentInChildren(ParticleSystem)();
-}
-
-Void Update()
-{
-    if (moveDirection.x >0)
-    {
-        if (!_walkParticles.isPlaying && sensor.isGrounded)
-        {
-        _walkParticles.Play();
-        }
-    }
-
-    else if (moveDirection.x <0)
-    {
-        if (!_walkParticles.isPlaying && sensor.isGrounded)
-        {
-            _walkParticles.Play();
-        }
-    }
-
-    else
-    {
-        if(_walkParticles.isPlaying)
-        {
-            _walkParticles = Stop();
-        }
-    }
-}
-
-Poner que no se ejecuten las particulas cuando salta.
-if (jumpAction.wasPressedThisFrame() && sensor.isGrounded)
-{
-    rBody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-    _walkParticles.Stop();
-}
-
-
-Se ejecutan las particulas al aterrizar cuando saltas.
-Script en el Ground Sensor.
-public ParticleSystem _jumpParticles;
-
-
-Void OnTriggerEnter2D(Collider2D collision)
-{
-    if(collision.gameObject)
-    {
-        _jumpParticles.Play();
-    }
-}
-Poner las variables publicas para asignar manualmente las particulas.
-
-
-Hacer que cuando caiga las particulas no se ejecuten, asi solo se ejecutaran al aterrizar al saltar y al moverse.
-if(!sensor.isGrounded && _walkParticles.isPlaying)
-{
-    _walkParticles.Stop();
-}
-
-
-
-}*/
