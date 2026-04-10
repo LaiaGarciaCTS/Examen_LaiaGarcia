@@ -1,134 +1,81 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 
 public class CharacterController : MonoBehaviour
 
+
 {
+    private Rigidbody2D rBody2D;
+    private SpriteRenderer spriteRenderer;
+    private Animator animator;
 
-private Rigidbody2D rBody2D;
-
-public Vector3 cameraOffset;
-public Vector3 minCameraPosition;
-public Vector3 maxCameraPosition;
-//public GameObject cameraTarget;
-
-
-//Movimiento y direccion
-public Vector3 startPosition;
-
-public float movementSpeed = 5;
-
-public int direction = 5;
-
-private InputAction moveAction;
-
-private Vector2 moveDirection;
-
-//Para hacer Flip
-private SpriteRenderer renderer;
-
-//Animaciones
-private Animator animator;
-
-//Salto
-private InputAction jumpAction;
-public float jumpForce = 10;
-
-//Salto NO infinito
-private GroundSensor sensor;
-
-
-
-void Awake()
-{
-    rBody2D = GetComponent<Rigidbody2D>();
-    renderer = GetComponent<SpriteRenderer>();
-    sensor = GetComponentInChildren<GroundSensor>();
-    animator = GetComponent<Animator>();
-
-    moveAction = InputSystem.actions["Move"];
-    jumpAction = InputSystem.actions["Jump"];
-
+    public float movementSpeed = 5f;
+    public float jumpForce = 10f;
     
+    
+    public GroundSensor sensor; 
+
+    private Vector2 moveDirection;
 
 
-    if(moveDirection.x > 0)
+
+    void Awake()
     {
-        renderer.flipX = false;
-        animator.SetBool("Animacion caminar", true);
+        rBody2D = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
     }
 
-    else if(moveDirection.x < 0)
+    void Update()
     {
-        renderer.flipX = true;
-        animator.SetBool("Animacion caminar", true);
+        // 1. MOVIMIENTO
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        moveDirection = new Vector2(horizontal, 0);
+
+        // 2. FLIP
+        if (horizontal > 0) spriteRenderer.flipX = false;
+        else if (horizontal < 0) spriteRenderer.flipX = true;
+
+        // 3. ANIMACIONES
+        if (sensor != null)
+        {
+            bool tocandoSuelo = sensor.IsGrounded();
+
+            if (!tocandoSuelo) //¿Está en el aire?
+            {
+                animator.SetBool("Saltar", true);
+                animator.SetBool("Caminar", false); // Apagamos caminar mientras salta
+            }
+            else //¿Está en el suelo?
+            {
+                animator.SetBool("Saltar", false);
+
+                if (horizontal != 0) // ¿Se está moviendo?
+                {
+                    animator.SetBool("Caminar", true);
+                }
+                else //¿Está quieto?
+                {
+                    animator.SetBool("Caminar", false);
+                }
+            }
+        }
+
+        // 4. SALTO
+        if (Input.GetKeyDown(KeyCode.Space) && sensor.IsGrounded())
+        {
+            rBody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        }
     }
 
-    else
+    void FixedUpdate()
     {
-        animator.SetBool("Animacion caminar", false);
+        // Movimiento físico
+        rBody2D.linearVelocity = new Vector2(moveDirection.x * movementSpeed, rBody2D.linearVelocity.y);
     }
 }
-
-
-void Start()
-{
-    transform.position = startPosition;
-
-    startPosition = new Vector3(0, 0, 0);
-
-    moveAction = InputSystem.actions["Move"];
-
-    moveDirection = moveAction.ReadValue<Vector2>();
-
-    transform.position = new Vector3(transform.position.x + moveDirection.x * movementSpeed * Time.deltaTime, transform.position.y, transform.position.z);
-
-    rBody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-}
-
-
-void Update()
-{
-    transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x + direction, transform.position.y), movementSpeed * Time.deltaTime);
-
-    //transform.position = new Vector3(cameraTarget.position.x, 0, 0) + cameraOffset;
-}
-
-
-void FixedUpdate()
-{
-    rBody2D.linearVelocity = new Vector2(moveDirection.x * movementSpeed, rBody2D.linearVelocity.y);
-}
-
-/*
-//Salto NO infinito
-void OnTriggerEnter2D(Collider2D collision)
-{
-    if(collision.gameObject.layer == 6)
-    {
-        isGrounded = true;
-    }
-}
-
-void OnTriggerStay2D(Collider2D collision)
-{
-    if(collision.gameObject.layer == 6)
-    {
-        isGrounded = true;
-    }
-}
-
-void OnTriggerExit2D(Collider2D collision)
-{
-    if(collision.gameObject.layer == 6)
-    {
-        isGrounded = false;
-    }
-}
-
-
-
+/* EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 
 
 /*Particulas
@@ -196,5 +143,5 @@ if(!sensor.isGrounded && _walkParticles.isPlaying)
 }
 
 
-*/
-}
+
+}*/
