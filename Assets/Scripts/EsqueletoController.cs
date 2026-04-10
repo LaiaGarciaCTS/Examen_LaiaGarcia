@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 public class CharacterController : MonoBehaviour
 
 {
+
+//Movimiento y dirección
 public Vector3 startPosition;
 
 public float movementSpeed = 5;
@@ -15,13 +17,31 @@ private InputAction moveAction;
 
 private Vector2 moveDirection;
 
+//Para hacer Flip
+private SpriteRenderer renderer;
+
+
+void Awake()
+{
+    renderer = GetComponent<SpriteRenderer>();
+
+    if(moveDirection.x > 0)
+    {
+        renderer.flipX = false;
+    }
+
+    else if(moveDirection.x < 0)
+    {
+        renderer.flipX = true;
+    }
+}
 
 
 void Start()
 {
-    transform.position = start.position;
+    transform.position = startPosition;
 
-    transform.start = new Vector3(0, 0, 0);
+    startPosition = new Vector3(0, 0, 0);
 
     moveAction = InputSystem.actions["Move"];
 
