@@ -6,7 +6,15 @@ public class CharacterController : MonoBehaviour
 
 {
 
-//Movimiento y dirección
+private Rigidbody2D rBody2D;
+
+public Vector3 cameraOffset;
+public Vector3 minCameraPosition;
+public Vector3 maxCameraPosition;
+public GameObject cameraTarget;
+
+
+//Movimiento y direccion
 public Vector3 startPosition;
 
 public float movementSpeed = 5;
@@ -20,19 +28,45 @@ private Vector2 moveDirection;
 //Para hacer Flip
 private SpriteRenderer renderer;
 
+//Animaciones
+private Animator animator;
+
+//Salto
+private InputAction jumpAction;
+
+//Salto NO infinito
+private GroundSensor sensor;
+
+
 
 void Awake()
 {
+    rBody2D = GetComponent<Rigidbody2D>();
     renderer = GetComponent<SpriteRenderer>();
+    sensor = GetComponentInChildren<GroundSensor>();
+    animator = GetComponent<Animator>();
+
+    moveAction = InputSystem.actions["Move"];
+    jumpAction = InputSystem.actions["Jump"];
+
+    
+
 
     if(moveDirection.x > 0)
     {
         renderer.flipX = false;
+        animator.SetBool("Animacion caminar", true);
     }
 
     else if(moveDirection.x < 0)
     {
         renderer.flipX = true;
+        animator.SetBool("Animacion caminar", true);
+    }
+
+    else
+    {
+        animator.SetBool("Animacion caminar", false);
     }
 }
 
@@ -54,6 +88,40 @@ void Start()
 void Update()
 {
     transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x + direction, transform.position.y), movementSpeed * Time.deltaTime);
+
+    transform.position = new Vector3(cameraTarget.position.x, 0, 0) + cameraOffset;
+}
+
+
+void FixedUpdate()
+{
+    rBody2D.linearVelocity = new Vector2(moveDirection.x * movementSpeed, rBody2D.linearVelocity.y);
+}
+
+
+//Salto NO infinito
+void OnTriggerEnter2D(Collider2D collision)
+{
+    if(collision.gameObject.layer == 6)
+    {
+        isGrounded = true;
+    }
+}
+
+void OnTriggerStay2D(Collider2D collision)
+{
+    if(collision.gameObject.layer == 6)
+    {
+        isGrounded = true;
+    }
+}
+
+void OnTriggerExit2D(Collider2D collision)
+{
+    if(collision.gameObject.layer == 6)
+    {
+        isGrounded = false;
+    }
 }
 
 
