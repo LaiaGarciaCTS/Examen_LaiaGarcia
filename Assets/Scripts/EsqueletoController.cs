@@ -49,20 +49,19 @@ public class CharacterController : MonoBehaviour
             if (!tocandoSuelo) //¿Está en el aire?
             {
                 animator.SetBool("Saltar", true);
-                animator.SetBool("Caminar", false); // Desactivamos caminar mientras salta
             }
             else //¿Está en el suelo?
             {
                 animator.SetBool("Saltar", false);
+            }
 
-                if (horizontal != 0) // ¿Se está moviendo?
-                {
-                    animator.SetBool("Caminar", true);
-                }
-                else //¿Está quieto?
-                {
-                    animator.SetBool("Caminar", false);
-                }
+            if (horizontal != 0) // ¿Se está moviendo?
+            {
+                animator.SetBool("Caminar", true);
+            }
+            else //¿Está quieto?
+            {
+                animator.SetBool("Caminar", false);
             }
         }
 
