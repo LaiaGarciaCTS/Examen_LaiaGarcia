@@ -18,6 +18,8 @@ public class CharacterController : MonoBehaviour
 
     private Vector2 moveDirection;
 
+    private Collider2D isGrounded;
+
 
 
     void Awake()
@@ -25,6 +27,8 @@ public class CharacterController : MonoBehaviour
         rBody2D = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+
+        sensor = GetComponentInChildren<GroundSensor>();
     }
 
     void Update()
@@ -69,7 +73,7 @@ public class CharacterController : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+        void FixedUpdate()
     {
         // Movimiento físico
         rBody2D.linearVelocity = new Vector2(moveDirection.x * movementSpeed, rBody2D.linearVelocity.y);

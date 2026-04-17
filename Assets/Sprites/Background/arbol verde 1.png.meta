@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 8a470affb2f7dcb47b6fb4a7563b4753
+guid: 0949a1bcd482a9246b4a5fbdd30101b0
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4730687767773390672
-    second: Slime-1_0
+      213: 4786013062946654918
+    second: arbol verde 1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Slime-1_0
+      name: arbol verde 1_0
       rect:
         serializedVersion: 2
-        x: 72
-        y: 66
-        width: 365
-        height: 237
+        x: 94
+        y: 0
+        width: 362
+        height: 221
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0b8d49a1a88395eb0800000000000000
-      internalID: -4730687767773390672
+      spriteID: 6ca805bf5855b6240800000000000000
+      internalID: 4786013062946654918
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Slime-1_0: -4730687767773390672
+      arbol verde 1_0: 4786013062946654918
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
