@@ -1,47 +1,134 @@
-using UnityEngine;
+﻿using UnityEngine;
  
-// Adjunta este script a cada objeto coleccionable del mapa (monedas, gemas, etc.)
-// Requiere un Collider2D en modo "Is Trigger" en el mismo GameObject.
- 
-public class Coleccionable : MonoBehaviour
-
+// =====================================================================
+//  MONEDA
+//  Collider2D del GameObject → Is Trigger activado
+//  Animator con animación de giro en loop (estado por defecto).
+// =====================================================================
+public class Moneda : MonoBehaviour
 {
-    [Header("Tipo de coleccionable")]
-    public TipoColeccionable tipo = TipoColeccionable.Moneda;
-    public int valor = 1; // Puntos o monedas que otorga
+    [Header("Valor")]
+    public int valor = 1;
  
     [Header("Efectos visuales (opcional)")]
-    public GameObject efectoAlRecoger; // Part�culas o animaci�n de recogida
+    public GameObject efectoAlRecoger;
  
-    //  DETECCI�N
-    private void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerEnter2D(Collider2D other)
     {
-        // Solo reacciona al jugador
         if (!other.CompareTag("Player")) return;
  
-        // Avisar al GameManager
         if (GameManager.Instancia != null)
-            GameManager.Instancia.A�adirPuntos(tipo, valor);
+            GameManager.Instancia.AñadirMoneda(valor);
  
-        // Avisar al personaje para que reproduzca el sonido
-        CharacterController jugador = other.GetComponent<CharacterController>();
-        if (jugador != null)
-            jugador.RecogerColeccionable();
+        PlayerController jugador = other.GetComponent<PlayerController>();
+        jugador?.ReproducirSonidoMoneda();
  
-        // Efecto visual
         if (efectoAlRecoger != null)
             Instantiate(efectoAlRecoger, transform.position, Quaternion.identity);
  
-        // Destruir el coleccionable
         Destroy(gameObject);
     }
 }
  
-// Enum para distinguir tipos de coleccionables f�cilmente
-public enum TipoColeccionable
+ 
+// =====================================================================
+//  LLAVE
+//  Collider2D del GameObject → Is Trigger activado
+//  Animator con animación de idle/flotación en loop (estado por defecto).
+// =====================================================================
+public class Llave : MonoBehaviour
 {
-    Moneda,
-    Gema,
-    Estrella,
-    PowerUp
+    [Header("Efectos visuales (opcional)")]
+    public GameObject efectoAlRecoger;
+ 
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!other.CompareTag("Player")) return;
+ 
+        if (GameManager.Instancia != null)
+            GameManager.Instancia.RecogerLlave();
+ 
+        PlayerController jugador = other.GetComponent<PlayerController>();
+        jugador?.ReproducirSonidoLlave();
+ 
+        if (efectoAlRecoger != null)
+            Instantiate(efectoAlRecoger, transform.position, Quaternion.identity);
+ 
+        Destroy(gameObject);
+    }
+}
+ 
+ 
+// =====================================================================
+//  PUERTA
+//  Necesita DOS Collider2D:
+//    1. Sin Is Trigger  → pared física
+//    2. Con Is Trigger  → zona de detección
+//
+//  Animator con:
+//    - Estado por defecto: "Cerrada" (animación estática, SIN loop)
+//    - Trigger "Abrir" → transición a animación de apertura (SIN loop)
+// =====================================================================
+public class Puerta : MonoBehaviour
+{
+    [Header("Sonido")]
+    public AudioClip sonidoAbrirPuerta;
+ 
+    [Header("Siguiente nivel")]
+    public string nombreSiguienteEscena = "Nivel2";
+ 
+    [Header("Componentes")]
+    public Animator animator;
+ 
+    private Collider2D colisionFisica;
+    private AudioSource audioSource;
+    private bool estaAbierta = false;
+ 
+    void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
+ 
+        foreach (Collider2D col in GetComponents<Collider2D>())
+        {
+            if (!col.isTrigger) { colisionFisica = col; break; }
+        }
+    }
+ 
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!other.CompareTag("Player")) return;
+ 
+        if (!estaAbierta)
+        {
+            if (GameManager.Instancia != null && GameManager.Instancia.TieneLlave())
+                AbrirPuerta();
+            else
+                Debug.Log("Necesitas la llave para abrir esta puerta.");
+        }
+        else
+        {
+            PasarAlSiguienteNivel();
+        }
+    }
+ 
+    void AbrirPuerta()
+    {
+        estaAbierta = true;
+ 
+        if (colisionFisica != null) colisionFisica.enabled = false;
+        if (audioSource != null && sonidoAbrirPuerta != null)
+            audioSource.PlayOneShot(sonidoAbrirPuerta);
+        if (animator != null) animator.SetTrigger("Abrir");
+        if (GameManager.Instancia != null) GameManager.Instancia.UsarLlave();
+ 
+        Debug.Log("¡Puerta abierta!");
+    }
+ 
+    void PasarAlSiguienteNivel()
+    {
+        if (GameManager.Instancia != null)
+            GameManager.Instancia.CargarSiguienteNivel(nombreSiguienteEscena);
+    }
 }

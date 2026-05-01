@@ -14,9 +14,9 @@ TagManager:
   - Water
   - UI
   - Background
-  - Plataformas
-  - Esqueleto
-  - Enemigos
+  - Suelo
+  - Player
+  - Enemigo
   - Objetos
   - 
   - 
