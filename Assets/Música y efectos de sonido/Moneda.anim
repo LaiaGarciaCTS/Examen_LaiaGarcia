@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Puerta
+  m_Name: Moneda
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,11 +21,13 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 8181471154818279510, guid: 040ef4f672626014bb3f58a0f405a81f, type: 3}
-    - time: 0.25
-      value: {fileID: 5619751394120253184, guid: c0b4bedf125cb9d459c131456faa87ad, type: 3}
+      value: {fileID: 7186996321364192929, guid: 96209aaf1d09d454aa0fb3a1eee10951, type: 3}
+    - time: 0.16666667
+      value: {fileID: -192747638961780876, guid: 96209aaf1d09d454aa0fb3a1eee10951, type: 3}
+    - time: 0.33333334
+      value: {fileID: -8637522762461814063, guid: 96209aaf1d09d454aa0fb3a1eee10951, type: 3}
     - time: 0.5
-      value: {fileID: 5293906867025004764, guid: 254fe2f85da16b941b7fced4fb58c43d, type: 3}
+      value: {fileID: 7186996321364192929, guid: 96209aaf1d09d454aa0fb3a1eee10951, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -48,9 +50,10 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 8181471154818279510, guid: 040ef4f672626014bb3f58a0f405a81f, type: 3}
-    - {fileID: 5619751394120253184, guid: c0b4bedf125cb9d459c131456faa87ad, type: 3}
-    - {fileID: 5293906867025004764, guid: 254fe2f85da16b941b7fced4fb58c43d, type: 3}
+    - {fileID: 7186996321364192929, guid: 96209aaf1d09d454aa0fb3a1eee10951, type: 3}
+    - {fileID: -192747638961780876, guid: 96209aaf1d09d454aa0fb3a1eee10951, type: 3}
+    - {fileID: -8637522762461814063, guid: 96209aaf1d09d454aa0fb3a1eee10951, type: 3}
+    - {fileID: 7186996321364192929, guid: 96209aaf1d09d454aa0fb3a1eee10951, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
