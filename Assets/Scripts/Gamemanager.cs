@@ -2,25 +2,22 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
  
 // Coloca este script en un GameObject vacío llamado "GameManager" en la escena.
-// Marca ese GameObject como "No destruir al cargar escena" si lo necesitas persistente.
  
 public class GameManager : MonoBehaviour
-
 {
-    // Patrón Singleton para acceder desde cualquier script
     public static GameManager Instancia { get; private set; }
  
     [Header("Puntuación")]
     public int monedas = 0;
-    public int puntos  = 0;
+ 
+    [Header("Llave")]
+    private bool tieneLlave = false;
  
     [Header("Game Over")]
-    public float tiempoEsperaGameOver = 1.5f; // Segundos antes de recargar/ir al menú
-    public string escenaGameOver = "GameOver"; // Nombre de la escena de Game Over (opcional)
+    public float tiempoEsperaGameOver = 1.5f;
+    public string escenaGameOver = "GameOver";
  
-    // -------------------------------------------------------
     //  SINGLETON
-    // -------------------------------------------------------
     private void Awake()
     {
         if (Instancia != null && Instancia != this)
@@ -29,41 +26,46 @@ public class GameManager : MonoBehaviour
             return;
         }
         Instancia = this;
-        // DontDestroyOnLoad(gameObject); // Descomenta si quieres que persista entre escenas
     }
  
-    // -------------------------------------------------------
-    //  COLECCIONABLES
-    // -------------------------------------------------------
-    public void AñadirPuntos(TipoColeccionable tipo, int valor)
+    //  MONEDAS
+    public void AñadirMoneda(int valor)
     {
-        switch (tipo)
-        {
-            case TipoColeccionable.Moneda:
-                monedas += valor;
-                Debug.Log($"Monedas: {monedas}");
-                break;
-            default:
-                puntos += valor;
-                Debug.Log($"Puntos: {puntos}");
-                break;
-        }
- 
-        // Aquí puedes actualizar tu UI (texto de monedas, puntuación, etc.)
-        // UIManager.Instancia?.ActualizarUI(monedas, puntos);
+        monedas += valor;
+        Debug.Log($"Monedas: {monedas}");
+        // UIManager.Instancia?.ActualizarMonedas(monedas); // Descomenta si tienes UI
     }
  
-    // -------------------------------------------------------
+    //  LLAVE
+    public void RecogerLlave()
+    {
+        tieneLlave = true;
+        Debug.Log("¡Llave recogida!");
+        // UIManager.Instancia?.MostrarIconoLlave(true);
+    }
+ 
+    public bool TieneLlave() => tieneLlave;
+ 
+    public void UsarLlave()
+    {
+        tieneLlave = false;
+        // UIManager.Instancia?.MostrarIconoLlave(false);
+    }
+ 
+    //  SIGUIENTE NIVEL
+    public void CargarSiguienteNivel(string nombreEscena)
+    {
+        if (!string.IsNullOrEmpty(nombreEscena))
+            SceneManager.LoadScene(nombreEscena);
+        else
+            Debug.LogWarning("No se ha asignado una escena de siguiente nivel en la Puerta.");
+    }
+ 
     //  GAME OVER
-    // -------------------------------------------------------
     public void GameOver()
     {
         Debug.Log("GAME OVER");
- 
-        // Paramos la banda sonora
         MusicaManager.Instancia?.PararMusica();
- 
-        // Esperamos un poco y luego gestionamos la pantalla de Game Over
         Invoke(nameof(CargarGameOver), tiempoEsperaGameOver);
     }
  
@@ -72,6 +74,6 @@ public class GameManager : MonoBehaviour
         if (!string.IsNullOrEmpty(escenaGameOver))
             SceneManager.LoadScene(escenaGameOver);
         else
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reinicia la escena actual
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

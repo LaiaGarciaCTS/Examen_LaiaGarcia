@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.InputSystem;
  
 public class CharacterController : MonoBehaviour
 {
@@ -12,16 +11,15 @@ public class CharacterController : MonoBehaviour
  
     public GroundSensor sensor;
  
-    // --- MUERTE ---
     [Header("Muerte")]
-    public float limiteCaida = -10f; // Coordenada Y por debajo de la cual el jugador muere
+    public float limiteCaida = -10f;
  
-    // --- SONIDOS ---
     [Header("Sonidos")]
     public AudioSource audioSource;
     public AudioClip sonidoSalto;
     public AudioClip sonidoMuerte;
-    public AudioClip sonidoRecoger;
+    public AudioClip sonidoMoneda;
+    public AudioClip sonidoLlave;
  
     private Vector2 moveDirection;
     private bool estaMuerto = false;
@@ -32,14 +30,12 @@ public class CharacterController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
  
-        // Si no se asigna el AudioSource en el Inspector, lo buscamos en el mismo objeto
         if (audioSource == null)
             audioSource = GetComponent<AudioSource>();
     }
  
     void Update()
     {
-        // Si el personaje está muerto no hacemos nada más
         if (estaMuerto) return;
  
         // 1. MOVIMIENTO
@@ -74,55 +70,38 @@ public class CharacterController : MonoBehaviour
             ReproducirSonido(sonidoSalto);
         }
  
-        // 5. COMPROBACIÓN DE CAÍDA (muerte por salir del mapa)
+        // 5. MUERTE POR CAÍDA
         if (transform.position.y < limiteCaida)
-        {
             Morir();
-        }
     }
  
     void FixedUpdate()
     {
         if (estaMuerto) return;
- 
         rBody2D.linearVelocity = new Vector2(moveDirection.x * movementSpeed, rBody2D.linearVelocity.y);
     }
  
-    // -------------------------------------------------------
     //  MUERTE
-    // -------------------------------------------------------
     public void Morir()
     {
         if (estaMuerto) return;
         estaMuerto = true;
  
-        // Sonido de muerte
         ReproducirSonido(sonidoMuerte);
- 
-        // Paramos físicas y animaciones
         rBody2D.linearVelocity = Vector2.zero;
         rBody2D.bodyType = RigidbodyType2D.Kinematic;
- 
-        // Animación de muerte (si existe en el Animator)
         animator.SetTrigger("Morir");
  
-        // Avisamos al GameManager para que gestione el Game Over
         if (GameManager.Instancia != null)
             GameManager.Instancia.GameOver();
     }
  
-    // -------------------------------------------------------
-    //  COLECCIONABLES  (llamado desde el script Coleccionable)
-    // -------------------------------------------------------
-    public void RecogerColeccionable()
-    {
-        ReproducirSonido(sonidoRecoger);
-    }
+    //  SONIDOS COLECCIONABLES (llamados desde cada coleccionable)
+    public void ReproducirSonidoMoneda() => ReproducirSonido(sonidoMoneda);
+    public void ReproducirSonidoLlave()  => ReproducirSonido(sonidoLlave);
  
-    // -------------------------------------------------------
     //  UTILIDAD
-    // -------------------------------------------------------
-    private void ReproducirSonido(AudioClip clip)
+    public void ReproducirSonido(AudioClip clip)
     {
         if (audioSource != null && clip != null)
             audioSource.PlayOneShot(clip);

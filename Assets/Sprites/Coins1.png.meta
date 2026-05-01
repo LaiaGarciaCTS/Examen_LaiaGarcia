@@ -122,12 +122,12 @@ TextureImporter:
       name: Coins1_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 15
-        height: 18
+        x: 3
+        y: 1
+        width: 3
+        height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -149,7 +149,7 @@ TextureImporter:
         width: 10
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -171,7 +171,7 @@ TextureImporter:
         width: 6
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -184,11 +184,33 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Coins1_3
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 1
+        width: 6
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2be4229d204728a43b5807ea251ee621
+      internalID: -1009532979
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: b82d353dc6b2acb45959c818c74efc7c
     internalID: 0
     vertices: []
     indices: 
@@ -201,6 +223,7 @@ TextureImporter:
       Coins1_0: 7186996321364192929
       Coins1_1: -192747638961780876
       Coins1_2: -8637522762461814063
+      Coins1_3: -1009532979
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
