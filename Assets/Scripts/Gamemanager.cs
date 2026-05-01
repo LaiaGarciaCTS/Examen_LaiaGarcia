@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 // Marca ese GameObject como "No destruir al cargar escena" si lo necesitas persistente.
  
 public class GameManager : MonoBehaviour
+
 {
     // Patrón Singleton para acceder desde cualquier script
     public static GameManager Instancia { get; private set; }

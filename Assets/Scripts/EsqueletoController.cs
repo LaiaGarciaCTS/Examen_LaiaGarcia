@@ -2,7 +2,6 @@
 using UnityEngine.InputSystem;
  
 public class CharacterController : MonoBehaviour
-
 {
     private Rigidbody2D rBody2D;
     private SpriteRenderer spriteRenderer;
@@ -89,7 +88,9 @@ public class CharacterController : MonoBehaviour
         rBody2D.linearVelocity = new Vector2(moveDirection.x * movementSpeed, rBody2D.linearVelocity.y);
     }
  
+    // -------------------------------------------------------
     //  MUERTE
+    // -------------------------------------------------------
     public void Morir()
     {
         if (estaMuerto) return;
@@ -98,7 +99,7 @@ public class CharacterController : MonoBehaviour
         // Sonido de muerte
         ReproducirSonido(sonidoMuerte);
  
-        // Físicas y animaciones
+        // Paramos físicas y animaciones
         rBody2D.linearVelocity = Vector2.zero;
         rBody2D.bodyType = RigidbodyType2D.Kinematic;
  
@@ -110,13 +111,17 @@ public class CharacterController : MonoBehaviour
             GameManager.Instancia.GameOver();
     }
  
+    // -------------------------------------------------------
     //  COLECCIONABLES  (llamado desde el script Coleccionable)
+    // -------------------------------------------------------
     public void RecogerColeccionable()
     {
         ReproducirSonido(sonidoRecoger);
     }
  
+    // -------------------------------------------------------
     //  UTILIDAD
+    // -------------------------------------------------------
     private void ReproducirSonido(AudioClip clip)
     {
         if (audioSource != null && clip != null)
