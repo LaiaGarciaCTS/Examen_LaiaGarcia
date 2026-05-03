@@ -2602,10 +2602,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6157f828620de94aa46ede7997258f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraTarget: {fileID: 0}
-  cameraOffset: {x: -1.93, y: -0.01, z: -10}
-  minCameraPosition: {x: -1.93, y: -0.01, z: -10}
-  maxCameraPosition: {x: 14.40125, y: -0.01, z: -10}
 --- !u!1001 &525966905
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5547,7 +5543,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 12.82, y: 7.06}
+    oldSize: {x: 3.56, y: 2.45}
     newSize: {x: 3.56, y: 2.45}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -5567,7 +5563,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f10a8a7b1743ff54ba7ab71668a42c50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  efectoAlRecoger: {fileID: 0}
 --- !u!114 &1144812721
 MonoBehaviour:
   m_ObjectHideFlags: 0

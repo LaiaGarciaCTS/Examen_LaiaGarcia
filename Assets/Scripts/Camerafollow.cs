@@ -1,52 +1,73 @@
 using UnityEngine;
  
 // =====================================================================
-//  CAMERA FOLLOW
+//  CAMERA FOLLOW — Solo eje X
 //  Coloca este script en la Main Camera.
-//  La cámara sigue al jugador con suavizado y puede tener límites de mapa.
+//
+//  La cámara sigue al jugador solo en el eje X, con límites izquierdo
+//  y derecho. El eje Y permanece fijo donde esté la cámara al inicio.
+//
+//  Pasos en Unity:
+//    1. Selecciona la Main Camera.
+//    2. Añade este script.
+//    3. Arrastra el GameObject del jugador al campo "objetivo".
+//    4. Ajusta limiteIzquierdo y limiteDerecho según el tamaño del mapa.
+//    5. Ajusta suavizado (0 = instantáneo, valores mayores = más suave).
 // =====================================================================
  
 public class CameraFollow : MonoBehaviour
 {
     [Header("Objetivo")]
-    public Transform objetivo;             // Arrastra el GameObject del jugador
+    public Transform objetivo;             // Arrastra aquí el jugador
  
     [Header("Suavizado")]
-    [Range(0f, 1f)]
-    public float suavizado = 0.12f;        // 0 = instantáneo, 1 = muy lento
+    [Range(0f, 0.3f)]
+    public float suavizado = 0.1f;         // Tiempo de suavizado en segundos
  
-    [Header("Offset")]
-    public Vector3 offset = new Vector3(0f, 1f, -10f);  // La Z debe ser negativa en 2D
+    [Header("Offset horizontal")]
+    public float offsetX = 0f;             // Desplazamiento extra en X (opcional)
  
-    [Header("Límites del mapa (opcional)")]
-    public bool usarLimites = false;
-    public float limiteMinX = -10f;
-    public float limiteMaxX =  10f;
-    public float limiteMinY = -5f;
-    public float limiteMaxY =  5f;
+    [Header("Límites del mapa en X")]
+    public float limiteIzquierdo = -20f;
+    public float limiteDerecho   =  20f;
  
-    private Vector3 velocidadActual = Vector3.zero;
+    // Y fija: se toma de la posición inicial de la cámara
+    private float yFija;
+    private float zFija;
+    private float velocidadX = 0f;
+ 
+    void Start()
+    {
+        yFija = transform.position.y;
+        zFija = transform.position.z;
+    }
  
     void LateUpdate()
     {
         if (objetivo == null) return;
  
-        Vector3 posicionObjetivo = objetivo.position + offset;
+        // Posición X objetivo con offset
+        float targetX = objetivo.position.x + offsetX;
  
-        if (usarLimites)
-        {
-            posicionObjetivo.x = Mathf.Clamp(posicionObjetivo.x, limiteMinX, limiteMaxX);
-            posicionObjetivo.y = Mathf.Clamp(posicionObjetivo.y, limiteMinY, limiteMaxY);
-        }
+        // Aplicar límites
+        float mitadAnchoCamara = Camera.main.orthographicSize * Camera.main.aspect;
+        targetX = Mathf.Clamp(targetX,
+                              limiteIzquierdo + mitadAnchoCamara,
+                              limiteDerecho   - mitadAnchoCamara);
  
-        // Mantener la Z de la cámara
-        posicionObjetivo.z = transform.position.z;
+        // Suavizado en X
+        float nuevoX = Mathf.SmoothDamp(transform.position.x, targetX, ref velocidadX, suavizado);
  
-        transform.position = Vector3.SmoothDamp(
-            transform.position,
-            posicionObjetivo,
-            ref velocidadActual,
-            suavizado
-        );
+        // Aplicar solo X; Y y Z permanecen fijas
+        transform.position = new Vector3(nuevoX, yFija, zFija);
+    }
+ 
+    // Dibuja los límites en el editor para verlos fácilmente
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.cyan;
+        float h = 10f;
+        Gizmos.DrawLine(new Vector3(limiteIzquierdo, -h, 0), new Vector3(limiteIzquierdo, h, 0));
+        Gizmos.DrawLine(new Vector3(limiteDerecho,   -h, 0), new Vector3(limiteDerecho,   h, 0));
     }
 }

@@ -1,20 +1,6 @@
 ﻿using UnityEngine;
  
-// =====================================================================
 //  PLAYER CONTROLLER
-//  Requiere en el mismo GameObject:
-//    - Rigidbody2D
-//    - Collider2D (CapsuleCollider2D recomendado)
-//    - SpriteRenderer
-//    - Animator
-//    - AudioSource
-//
-//  Parámetros del Animator que DEBES crear (exactamente igual):
-//    - "Velocidad"  → Float  (para caminar / idle)
-//    - "EnSuelo"    → Bool   (true cuando toca el suelo)
-//    - "Morir"      → Trigger (para la animación de muerte)
-//    - "Atacar"     → Trigger (para la animación de ataque)
-// =====================================================================
  
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(SpriteRenderer))]
@@ -22,24 +8,18 @@
 [RequireComponent(typeof(AudioSource))]
 public class PlayerController : MonoBehaviour
 {
-    // ------------------------------------------------------------------
     //  MOVIMIENTO
-    // ------------------------------------------------------------------
     [Header("Movimiento")]
     public float velocidadMovimiento = 5f;
-    public float fuerzaSalto = 10f;
+    public float fuerzaSalto = 12f;
  
-    // ------------------------------------------------------------------
     //  DETECTOR DE SUELO
-    // ------------------------------------------------------------------
     [Header("Detección de suelo")]
     public Transform puntoSuelo;
     public float radioSuelo = 0.15f;
     public LayerMask capaSuelo;
  
-    // ------------------------------------------------------------------
     //  SALUD / VIDAS
-    // ------------------------------------------------------------------
     [Header("Salud")]
     public int vidasMaximas = 3;
     private int vidasActuales;
@@ -47,15 +27,11 @@ public class PlayerController : MonoBehaviour
     private float timerInvulnerabilidad = 0f;
     private bool esInvulnerable = false;
  
-    // ------------------------------------------------------------------
     //  MUERTE POR CAÍDA
-    // ------------------------------------------------------------------
     [Header("Límite de caída")]
     public float limiteCaida = -10f;
  
-    // ------------------------------------------------------------------
     //  ATAQUE
-    // ------------------------------------------------------------------
     [Header("Ataque")]
     public Transform puntoAtaque;
     public float radioAtaque = 0.5f;
@@ -64,9 +40,7 @@ public class PlayerController : MonoBehaviour
     public float cooldownAtaque = 0.4f;
     private float timerAtaque = 0f;
  
-    // ------------------------------------------------------------------
     //  SONIDOS
-    // ------------------------------------------------------------------
     [Header("Sonidos")]
     public AudioClip sonidoSalto;
     public AudioClip sonidoMuerte;
@@ -75,21 +49,18 @@ public class PlayerController : MonoBehaviour
     public AudioClip sonidoMoneda;
     public AudioClip sonidoLlave;
  
-    // ------------------------------------------------------------------
-    //  REFERENCIAS PRIVADAS
-    // ------------------------------------------------------------------
+    //  PRIVADO
     private Rigidbody2D rb;
     private SpriteRenderer sr;
     private Animator anim;
     private AudioSource audioSource;
  
     private float horizontal;
-    private bool estaMuerto = false;
+    private bool saltarEsteFrame = false;   // Flag: saltar en el próximo FixedUpdate
     private bool enSuelo = false;
+    private bool estaMuerto = false;
  
-    // ==================================================================
-    //  UNITY MESSAGES
-    // ==================================================================
+    //  AWAKE / START
  
     void Awake()
     {
@@ -97,62 +68,85 @@ public class PlayerController : MonoBehaviour
         sr          = GetComponent<SpriteRenderer>();
         anim        = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
- 
         vidasActuales = vidasMaximas;
     }
  
     void Start()
     {
-        // Actualizar UI al inicio con las vidas iniciales
         UIManager.Instancia?.ActualizarVidas(vidasActuales);
     }
+ 
+    //  UPDATE  — lectura de input y animaciones
  
     void Update()
     {
         if (estaMuerto) return;
  
+        // Suelo
         ComprobarSuelo();
-        GestionarMovimiento();
-        GestionarSalto();
+ 
+        // Movimiento horizontal + flip de sprite
+        horizontal = Input.GetAxisRaw("Horizontal");
+        if      (horizontal > 0f) sr.flipX = false;
+        else if (horizontal < 0f) sr.flipX = true;
+ 
+        // Animación caminar / idle (solo cuando pisa el suelo)
+        if (enSuelo)
+            anim.SetFloat("Velocidad", Mathf.Abs(horizontal));
+ 
+        // Salto: detectado aquí, aplicado en FixedUpdate
+        if (Input.GetKeyDown(KeyCode.Space) && enSuelo)
+        {
+            saltarEsteFrame = true;
+            enSuelo = false;                  // evita doble salto en el mismo frame
+            anim.SetBool("EnSuelo", false);
+            anim.SetTrigger("Saltando");
+            ReproducirSonido(sonidoSalto);
+        }
+ 
+        // Ataque
         GestionarAtaque();
-        ComprobarCaida();
+ 
+        // Muerte por caída al vacío
+        if (transform.position.y < limiteCaida)
+            Morir();
+ 
+        // Parpadeo invulnerabilidad
         GestionarInvulnerabilidad();
     }
+ 
+    //  FIXED UPDATE — física
  
     void FixedUpdate()
     {
         if (estaMuerto) return;
-        rb.linearVelocity = new Vector2(horizontal * velocidadMovimiento, rb.linearVelocity.y);
+ 
+        if (saltarEsteFrame)
+        {
+            // Resetea Y para que la fuerza sea siempre la misma sin importar caídas previas
+            rb.linearVelocity = new Vector2(horizontal * velocidadMovimiento, fuerzaSalto);
+            saltarEsteFrame = false;
+        }
+        else
+        {
+            // Solo toca la X; conserva la Y de la gravedad
+            rb.linearVelocity = new Vector2(horizontal * velocidadMovimiento, rb.linearVelocity.y);
+        }
     }
  
-    // ==================================================================
     //  LÓGICA PRIVADA
-    // ==================================================================
  
     void ComprobarSuelo()
     {
         if (puntoSuelo == null) return;
+ 
+        bool anteriorEnSuelo = enSuelo;
         enSuelo = Physics2D.OverlapCircle(puntoSuelo.position, radioSuelo, capaSuelo);
         anim.SetBool("EnSuelo", enSuelo);
-    }
  
-    void GestionarMovimiento()
-    {
-        horizontal = Input.GetAxisRaw("Horizontal");
- 
-        if (horizontal > 0) sr.flipX = false;
-        else if (horizontal < 0) sr.flipX = true;
- 
-        anim.SetFloat("Velocidad", Mathf.Abs(horizontal));
-    }
- 
-    void GestionarSalto()
-    {
-        if (Input.GetKeyDown(KeyCode.Space) && enSuelo)
-        {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, fuerzaSalto);
-            ReproducirSonido(sonidoSalto);
-        }
+        // Al aterrizar: actualiza Velocidad para que Idle/Walk se reactive
+        if (!anteriorEnSuelo && enSuelo)
+            anim.SetFloat("Velocidad", Mathf.Abs(horizontal));
     }
  
     void GestionarAtaque()
@@ -167,22 +161,16 @@ public class PlayerController : MonoBehaviour
  
             if (puntoAtaque != null)
             {
-                Collider2D[] enemigosGolpeados = Physics2D.OverlapCircleAll(
+                Collider2D[] golpeados = Physics2D.OverlapCircleAll(
                     puntoAtaque.position, radioAtaque, capaEnemigos);
  
-                foreach (Collider2D enemigo in enemigosGolpeados)
+                foreach (Collider2D col in golpeados)
                 {
-                    EnemyController ec = enemigo.GetComponent<EnemyController>();
+                    EnemyController ec = col.GetComponent<EnemyController>();
                     if (ec != null) ec.RecibirDaño(dañoAtaque);
                 }
             }
         }
-    }
- 
-    void ComprobarCaida()
-    {
-        if (transform.position.y < limiteCaida)
-            Morir();
     }
  
     void GestionarInvulnerabilidad()
@@ -199,9 +187,7 @@ public class PlayerController : MonoBehaviour
         }
     }
  
-    // ==================================================================
     //  API PÚBLICA
-    // ==================================================================
  
     public void RecibirDaño(int cantidad = 1)
     {
@@ -209,13 +195,10 @@ public class PlayerController : MonoBehaviour
  
         vidasActuales -= cantidad;
         ReproducirSonido(sonidoDaño);
- 
         UIManager.Instancia?.ActualizarVidas(vidasActuales);
  
         if (vidasActuales <= 0)
-        {
             Morir();
-        }
         else
         {
             esInvulnerable = true;
@@ -246,6 +229,8 @@ public class PlayerController : MonoBehaviour
         if (audioSource != null && clip != null)
             audioSource.PlayOneShot(clip);
     }
+ 
+    //  GIZMOS
  
     void OnDrawGizmosSelected()
     {
