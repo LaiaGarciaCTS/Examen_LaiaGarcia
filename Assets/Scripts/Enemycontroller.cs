@@ -1,27 +1,6 @@
 using UnityEngine;
  
-// =====================================================================
 //  ENEMY CONTROLLER
-//  Requiere en el mismo GameObject:
-//    - Rigidbody2D  (Gravity Scale 1, Collision Detection: Continuous)
-//    - Collider2D   (el cuerpo físico del enemigo)
-//    - SpriteRenderer
-//    - Animator
-//    - AudioSource
-//
-//  Layer del GameObject: "Enemigo"
-//
-//  Parámetros del Animator que DEBES crear:
-//    - "Velocidad"  → Float
-//    - "Morir"      → Trigger
-//    - "Atacar"     → Trigger  (solo si usas animación de ataque)
-//
-//  Cómo funciona:
-//    - Patrulla entre puntoA y puntoB.
-//    - Si el jugador entra en el rango de detección, lo persigue.
-//    - Al contacto con el jugador, le hace daño.
-//    - Si el jugador le salta encima (viene de arriba), muere.
-// =====================================================================
  
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(SpriteRenderer))]
@@ -54,8 +33,8 @@ public class EnemyController : MonoBehaviour
     // ------------------------------------------------------------------
     [Header("Daño")]
     public int dañoAlJugador = 1;
-    public float cooldownDanio = 1f;
-    private float timerDanio = 0f;
+    public float cooldownDaño = 1f;
+    private float timerDaño = 0f;
  
     // ------------------------------------------------------------------
     //  MUERTE POR PISADA
@@ -106,7 +85,7 @@ public class EnemyController : MonoBehaviour
     {
         if (estaMuerto) return;
  
-        timerDanio -= Time.deltaTime;
+        timerDaño -= Time.deltaTime;
  
         if (jugador != null && Vector2.Distance(transform.position, jugador.position) < rangoDeteccion)
             Perseguir();
@@ -170,10 +149,10 @@ public class EnemyController : MonoBehaviour
         }
         else
         {
-            if (timerDanio <= 0f)
+            if (timerDaño <= 0f)
             {
-                timerDanio = cooldownDanio;
-                jugadorCtrl.RecibirDaño(dañoAlJugador);
+                timerDaño = cooldownDaño;
+                jugadorCtrl.RecibirDanio(dañoAlJugador);
  
                 if (sonidoGolpe != null) audioSource.PlayOneShot(sonidoGolpe);
             }

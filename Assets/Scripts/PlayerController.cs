@@ -1,46 +1,30 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
  
 //  PLAYER CONTROLLER
  
-[RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(SpriteRenderer))]
-[RequireComponent(typeof(Animator))]
-[RequireComponent(typeof(AudioSource))]
 public class PlayerController : MonoBehaviour
 {
-    //  MOVIMIENTO
-    [Header("Movimiento")]
-    public float velocidadMovimiento = 5f;
-    public float fuerzaSalto = 12f;
+    // ------------------------------------------------------------------
+    //  VARIABLES PÚBLICAS (visibles en Inspector)
+    // ------------------------------------------------------------------
+    public Vector3 startPosition;
+    public float movementSpeed = 5f;
+    public float jumpForce = 10f;
  
-    //  DETECTOR DE SUELO
-    [Header("Detección de suelo")]
-    public Transform puntoSuelo;
-    public float radioSuelo = 0.15f;
-    public LayerMask capaSuelo;
- 
-    //  SALUD / VIDAS
     [Header("Salud")]
     public int vidasMaximas = 3;
-    private int vidasActuales;
-    public float tiempoInvulnerabilidad = 1f;
-    private float timerInvulnerabilidad = 0f;
-    private bool esInvulnerable = false;
  
-    //  MUERTE POR CAÍDA
-    [Header("Límite de caída")]
+    [Header("Caída")]
     public float limiteCaida = -10f;
  
-    //  ATAQUE
     [Header("Ataque")]
     public Transform puntoAtaque;
     public float radioAtaque = 0.5f;
     public int dañoAtaque = 1;
     public LayerMask capaEnemigos;
     public float cooldownAtaque = 0.4f;
-    private float timerAtaque = 0f;
  
-    //  SONIDOS
     [Header("Sonidos")]
     public AudioClip sonidoSalto;
     public AudioClip sonidoMuerte;
@@ -49,114 +33,94 @@ public class PlayerController : MonoBehaviour
     public AudioClip sonidoMoneda;
     public AudioClip sonidoLlave;
  
-    //  PRIVADO
-    private Rigidbody2D rb;
-    private SpriteRenderer sr;
-    private Animator anim;
-    private AudioSource audioSource;
+    // ------------------------------------------------------------------
+    //  VARIABLES PRIVADAS
+    // ------------------------------------------------------------------
+    private Rigidbody2D rBody2D;
+    private SpriteRenderer renderer;
+    private Animator animator;
+    private AudioSource _audioSource;
+    private GroundSensor sensor;      // <-- usa tu GroundSensor con OnTrigger
  
-    private float horizontal;
-    private bool saltarEsteFrame = false;   // Flag: saltar en el próximo FixedUpdate
-    private bool enSuelo = false;
+    private InputAction moveAction;
+    private InputAction jumpAction;
+ 
+    private Vector2 moveDirection;
+    private int vidasActuales;
     private bool estaMuerto = false;
+    private float timerAtaque = 0f;
+    private float timerInvulnerabilidad = 0f;
+    private bool esInvulnerable = false;
  
-    //  AWAKE / START
- 
+    // ==================================================================
+    //  AWAKE
+    // ==================================================================
     void Awake()
     {
-        rb          = GetComponent<Rigidbody2D>();
-        sr          = GetComponent<SpriteRenderer>();
-        anim        = GetComponent<Animator>();
-        audioSource = GetComponent<AudioSource>();
-        vidasActuales = vidasMaximas;
+        rBody2D      = GetComponent<Rigidbody2D>();
+        renderer     = GetComponent<SpriteRenderer>();
+        animator     = GetComponent<Animator>();
+        _audioSource = GetComponent<AudioSource>();
+        sensor       = GetComponentInChildren<GroundSensor>(); // busca en hijos
+ 
+        moveAction = InputSystem.actions["Move"];
+        jumpAction = InputSystem.actions["Jump"];
     }
  
+    // ==================================================================
+    //  START
+    // ==================================================================
     void Start()
     {
-        UIManager.Instancia?.ActualizarVidas(vidasActuales);
+        transform.position = startPosition;
+        vidasActuales = vidasMaximas;
+        // UIManager.Instancia?.ActualizarVidas(vidasActuales);
     }
  
-    //  UPDATE  — lectura de input y animaciones
- 
+    // ==================================================================
+    //  UPDATE
+    // ==================================================================
     void Update()
     {
         if (estaMuerto) return;
  
-        // Suelo
-        ComprobarSuelo();
+        timerAtaque -= Time.deltaTime;
  
-        // Movimiento horizontal + flip de sprite
-        horizontal = Input.GetAxisRaw("Horizontal");
-        if      (horizontal > 0f) sr.flipX = false;
-        else if (horizontal < 0f) sr.flipX = true;
+        // Leer dirección del teclado
+        moveDirection = moveAction.ReadValue<Vector2>();
  
-        // Animación caminar / idle (solo cuando pisa el suelo)
-        if (enSuelo)
-            anim.SetFloat("Velocidad", Mathf.Abs(horizontal));
- 
-        // Salto: detectado aquí, aplicado en FixedUpdate
-        if (Input.GetKeyDown(KeyCode.Space) && enSuelo)
+        // Flip del sprite + animación de correr (según apuntes)
+        if (moveDirection.x > 0)
         {
-            saltarEsteFrame = true;
-            enSuelo = false;                  // evita doble salto en el mismo frame
-            anim.SetBool("EnSuelo", false);
-            anim.SetTrigger("Saltando");
-            ReproducirSonido(sonidoSalto);
+            renderer.flipX = false;
+            animator.SetBool("IsRunning", true);
         }
- 
-        // Ataque
-        GestionarAtaque();
- 
-        // Muerte por caída al vacío
-        if (transform.position.y < limiteCaida)
-            Morir();
- 
-        // Parpadeo invulnerabilidad
-        GestionarInvulnerabilidad();
-    }
- 
-    //  FIXED UPDATE — física
- 
-    void FixedUpdate()
-    {
-        if (estaMuerto) return;
- 
-        if (saltarEsteFrame)
+        else if (moveDirection.x < 0)
         {
-            // Resetea Y para que la fuerza sea siempre la misma sin importar caídas previas
-            rb.linearVelocity = new Vector2(horizontal * velocidadMovimiento, fuerzaSalto);
-            saltarEsteFrame = false;
+            renderer.flipX = true;
+            animator.SetBool("IsRunning", true);
         }
         else
         {
-            // Solo toca la X; conserva la Y de la gravedad
-            rb.linearVelocity = new Vector2(horizontal * velocidadMovimiento, rb.linearVelocity.y);
+            animator.SetBool("IsRunning", false);
         }
-    }
  
-    //  LÓGICA PRIVADA
+        // ---------------------------------------------------------------
+        //  SALTO — usa sensor.IsGrounded() igual que en tus apuntes
+        // ---------------------------------------------------------------
+        if (jumpAction.WasPressedThisFrame() && sensor.IsGrounded())
+        {
+            rBody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            ReproducirSonido(sonidoSalto);
+        }
  
-    void ComprobarSuelo()
-    {
-        if (puntoSuelo == null) return;
+        // Animación salto: !sensor.IsGrounded() (según apuntes)
+        animator.SetBool("IsJumping", !sensor.IsGrounded());
  
-        bool anteriorEnSuelo = enSuelo;
-        enSuelo = Physics2D.OverlapCircle(puntoSuelo.position, radioSuelo, capaSuelo);
-        anim.SetBool("EnSuelo", enSuelo);
- 
-        // Al aterrizar: actualiza Velocidad para que Idle/Walk se reactive
-        if (!anteriorEnSuelo && enSuelo)
-            anim.SetFloat("Velocidad", Mathf.Abs(horizontal));
-    }
- 
-    void GestionarAtaque()
-    {
-        timerAtaque -= Time.deltaTime;
- 
+        // Ataque con Z
         if (Input.GetKeyDown(KeyCode.Z) && timerAtaque <= 0f)
         {
             timerAtaque = cooldownAtaque;
-            anim.SetTrigger("Atacar");
             ReproducirSonido(sonidoAtaque);
  
             if (puntoAtaque != null)
@@ -171,38 +135,52 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-    }
  
-    void GestionarInvulnerabilidad()
-    {
-        if (!esInvulnerable) return;
+        // Muerte por caída
+        if (transform.position.y < limiteCaida)
+            Morir();
  
-        timerInvulnerabilidad -= Time.deltaTime;
-        sr.enabled = (Mathf.Sin(Time.time * 20f) > 0f);
- 
-        if (timerInvulnerabilidad <= 0f)
+        // Parpadeo invulnerabilidad
+        if (esInvulnerable)
         {
-            esInvulnerable = false;
-            sr.enabled = true;
+            timerInvulnerabilidad -= Time.deltaTime;
+            renderer.enabled = (Mathf.Sin(Time.time * 20f) > 0f);
+            if (timerInvulnerabilidad <= 0f)
+            {
+                esInvulnerable = false;
+                renderer.enabled = true;
+            }
         }
     }
  
-    //  API PÚBLICA
+    // ==================================================================
+    //  FIXED UPDATE — linearVelocity (según apuntes)
+    // ==================================================================
+    void FixedUpdate()
+    {
+        if (estaMuerto) return;
+        rBody2D.linearVelocity = new Vector2(
+            moveDirection.x * movementSpeed,
+            rBody2D.linearVelocity.y);
+    }
  
-    public void RecibirDaño(int cantidad = 1)
+    // ==================================================================
+    //  API PÚBLICA
+    // ==================================================================
+    public void RecibirDanio(int cantidad = 1)
     {
         if (estaMuerto || esInvulnerable) return;
  
         vidasActuales -= cantidad;
         ReproducirSonido(sonidoDaño);
-        UIManager.Instancia?.ActualizarVidas(vidasActuales);
+        // UIManager.Instancia?.ActualizarVidas(vidasActuales);
  
         if (vidasActuales <= 0)
             Morir();
         else
         {
             esInvulnerable = true;
-            timerInvulnerabilidad = tiempoInvulnerabilidad;
+            timerInvulnerabilidad = 1f;
         }
     }
  
@@ -212,13 +190,12 @@ public class PlayerController : MonoBehaviour
         estaMuerto = true;
  
         ReproducirSonido(sonidoMuerte);
-        rb.linearVelocity = Vector2.zero;
-        rb.bodyType = RigidbodyType2D.Kinematic;
-        anim.SetTrigger("Morir");
-        sr.enabled = true;
+        rBody2D.linearVelocity = Vector2.zero;
+        rBody2D.bodyType = RigidbodyType2D.Kinematic;
+        animator.SetTrigger("Morir");
+        renderer.enabled = true;
  
-        if (GameManager.Instancia != null)
-            GameManager.Instancia.GameOver();
+        GameManager.Instancia?.GameOver();
     }
  
     public void ReproducirSonidoMoneda() => ReproducirSonido(sonidoMoneda);
@@ -226,19 +203,12 @@ public class PlayerController : MonoBehaviour
  
     public void ReproducirSonido(AudioClip clip)
     {
-        if (audioSource != null && clip != null)
-            audioSource.PlayOneShot(clip);
+        if (_audioSource != null && clip != null)
+            _audioSource.PlayOneShot(clip);
     }
- 
-    //  GIZMOS
  
     void OnDrawGizmosSelected()
     {
-        if (puntoSuelo != null)
-        {
-            Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(puntoSuelo.position, radioSuelo);
-        }
         if (puntoAtaque != null)
         {
             Gizmos.color = Color.red;
