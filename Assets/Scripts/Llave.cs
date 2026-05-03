@@ -1,14 +1,10 @@
 ﻿using UnityEngine;
  
 
-// =====================================================================
 //  LLAVE
-//  Collider2D del GameObject → Is Trigger activado
-//  Animator con animación de idle/flotación en loop (estado por defecto).
-// =====================================================================
+
 public class Llave : MonoBehaviour
 {
-    [Header("Efectos visuales (opcional)")]
     public GameObject efectoAlRecoger;
  
     void OnTriggerEnter2D(Collider2D other)
@@ -17,6 +13,8 @@ public class Llave : MonoBehaviour
  
         if (GameManager.Instancia != null)
             GameManager.Instancia.RecogerLlave();
+        else
+            Debug.LogWarning("GameManager no encontrado. Comprueba que esta en la escena.");
  
         PlayerController jugador = other.GetComponent<PlayerController>();
         jugador?.ReproducirSonidoLlave();

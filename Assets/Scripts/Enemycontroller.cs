@@ -7,51 +7,37 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class EnemyController : MonoBehaviour
 {
-    // ------------------------------------------------------------------
     //  SALUD
-    // ------------------------------------------------------------------
     [Header("Salud")]
     public int vida = 2;
  
-    // ------------------------------------------------------------------
     //  PATRULLA
-    // ------------------------------------------------------------------
     [Header("Patrulla")]
     public Transform puntoA;
     public Transform puntoB;
     public float velocidadPatrulla = 2f;
  
-    // ------------------------------------------------------------------
     //  PERSECUCIÓN
-    // ------------------------------------------------------------------
     [Header("Persecución")]
     public float rangoDeteccion = 4f;
     public float velocidadPersecucion = 3.5f;
  
-    // ------------------------------------------------------------------
     //  DAÑO AL JUGADOR
-    // ------------------------------------------------------------------
     [Header("Daño")]
     public int dañoAlJugador = 1;
     public float cooldownDaño = 1f;
     private float timerDaño = 0f;
  
-    // ------------------------------------------------------------------
     //  MUERTE POR PISADA
-    // ------------------------------------------------------------------
     [Header("Muerte por pisada")]
     public float fuerzaRebote = 6f;
  
-    // ------------------------------------------------------------------
     //  SONIDOS
-    // ------------------------------------------------------------------
     [Header("Sonidos")]
     public AudioClip sonidoMuerte;
     public AudioClip sonidoGolpe;
  
-    // ------------------------------------------------------------------
     //  REFERENCIAS
-    // ------------------------------------------------------------------
     private Rigidbody2D rb;
     private SpriteRenderer sr;
     private Animator anim;
@@ -61,9 +47,7 @@ public class EnemyController : MonoBehaviour
     private bool estaMuerto = false;
     private bool yendoHaciaB = true;
  
-    // ==================================================================
     //  UNITY MESSAGES
-    // ==================================================================
  
     void Awake()
     {
@@ -93,9 +77,7 @@ public class EnemyController : MonoBehaviour
             Patrullar();
     }
  
-    // ==================================================================
     //  MOVIMIENTO
-    // ==================================================================
  
     void Patrullar()
     {
@@ -125,9 +107,7 @@ public class EnemyController : MonoBehaviour
         anim.SetFloat("Velocidad", Mathf.Abs(direccion.x));
     }
  
-    // ==================================================================
     //  CONTACTO CON EL JUGADOR
-    // ==================================================================
  
     void OnCollisionEnter2D(Collision2D collision)
     {
@@ -152,16 +132,14 @@ public class EnemyController : MonoBehaviour
             if (timerDaño <= 0f)
             {
                 timerDaño = cooldownDaño;
-                jugadorCtrl.RecibirDanio(dañoAlJugador);
+                jugadorCtrl.RecibirDaño(dañoAlJugador);
  
                 if (sonidoGolpe != null) audioSource.PlayOneShot(sonidoGolpe);
             }
         }
     }
  
-    // ==================================================================
     //  DAÑO AL ENEMIGO
-    // ==================================================================
  
     public void RecibirDaño(int cantidad)
     {
@@ -191,9 +169,7 @@ public class EnemyController : MonoBehaviour
         Destroy(gameObject, 1f);
     }
  
-    // ==================================================================
     //  GIZMOS
-    // ==================================================================
  
     void OnDrawGizmosSelected()
     {

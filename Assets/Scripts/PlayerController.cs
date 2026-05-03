@@ -5,27 +5,21 @@ using UnityEngine.InputSystem;
  
 public class PlayerController : MonoBehaviour
 {
-    // ------------------------------------------------------------------
-    //  VARIABLES PÚBLICAS (visibles en Inspector)
-    // ------------------------------------------------------------------
+    //  VARIABLES PÚBLICAS
     public Vector3 startPosition;
     public float movementSpeed = 5f;
     public float jumpForce = 10f;
  
-    [Header("Salud")]
     public int vidasMaximas = 3;
  
-    [Header("Caída")]
     public float limiteCaida = -10f;
  
-    [Header("Ataque")]
     public Transform puntoAtaque;
     public float radioAtaque = 0.5f;
     public int dañoAtaque = 1;
     public LayerMask capaEnemigos;
     public float cooldownAtaque = 0.4f;
  
-    [Header("Sonidos")]
     public AudioClip sonidoSalto;
     public AudioClip sonidoMuerte;
     public AudioClip sonidoDaño;
@@ -33,14 +27,12 @@ public class PlayerController : MonoBehaviour
     public AudioClip sonidoMoneda;
     public AudioClip sonidoLlave;
  
-    // ------------------------------------------------------------------
     //  VARIABLES PRIVADAS
-    // ------------------------------------------------------------------
     private Rigidbody2D rBody2D;
     private SpriteRenderer renderer;
     private Animator animator;
     private AudioSource _audioSource;
-    private GroundSensor sensor;      // <-- usa tu GroundSensor con OnTrigger
+    private GroundSensor sensor;
  
     private InputAction moveAction;
     private InputAction jumpAction;
@@ -52,44 +44,35 @@ public class PlayerController : MonoBehaviour
     private float timerInvulnerabilidad = 0f;
     private bool esInvulnerable = false;
  
-    // ==================================================================
     //  AWAKE
-    // ==================================================================
     void Awake()
     {
         rBody2D      = GetComponent<Rigidbody2D>();
         renderer     = GetComponent<SpriteRenderer>();
         animator     = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
-        sensor       = GetComponentInChildren<GroundSensor>(); // busca en hijos
+        sensor       = GetComponentInChildren<GroundSensor>();
  
         moveAction = InputSystem.actions["Move"];
         jumpAction = InputSystem.actions["Jump"];
     }
  
-    // ==================================================================
     //  START
-    // ==================================================================
     void Start()
     {
         transform.position = startPosition;
         vidasActuales = vidasMaximas;
-        // UIManager.Instancia?.ActualizarVidas(vidasActuales);
     }
  
-    // ==================================================================
     //  UPDATE
-    // ==================================================================
     void Update()
     {
         if (estaMuerto) return;
  
         timerAtaque -= Time.deltaTime;
  
-        // Leer dirección del teclado
         moveDirection = moveAction.ReadValue<Vector2>();
  
-        // Flip del sprite + animación de correr (según apuntes)
         if (moveDirection.x > 0)
         {
             renderer.flipX = false;
@@ -105,16 +88,14 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("IsRunning", false);
         }
  
-        // ---------------------------------------------------------------
-        //  SALTO — usa sensor.IsGrounded() igual que en tus apuntes
-        // ---------------------------------------------------------------
+        //  SALTO
         if (jumpAction.WasPressedThisFrame() && sensor.IsGrounded())
         {
             rBody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             ReproducirSonido(sonidoSalto);
         }
  
-        // Animación salto: !sensor.IsGrounded() (según apuntes)
+        // Animación salto
         animator.SetBool("IsJumping", !sensor.IsGrounded());
  
         // Ataque con Z
@@ -153,9 +134,7 @@ public class PlayerController : MonoBehaviour
         }
     }
  
-    // ==================================================================
-    //  FIXED UPDATE — linearVelocity (según apuntes)
-    // ==================================================================
+    //  FIXED UPDATE
     void FixedUpdate()
     {
         if (estaMuerto) return;
@@ -164,16 +143,13 @@ public class PlayerController : MonoBehaviour
             rBody2D.linearVelocity.y);
     }
  
-    // ==================================================================
     //  API PÚBLICA
-    // ==================================================================
-    public void RecibirDanio(int cantidad = 1)
+    public void RecibirDaño(int cantidad = 1)
     {
         if (estaMuerto || esInvulnerable) return;
  
         vidasActuales -= cantidad;
         ReproducirSonido(sonidoDaño);
-        // UIManager.Instancia?.ActualizarVidas(vidasActuales);
  
         if (vidasActuales <= 0)
             Morir();

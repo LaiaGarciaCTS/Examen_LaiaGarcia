@@ -2604,7 +2604,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraOffset: {x: 0, y: 5, z: -10}
   minCameraPosition: {x: -2, y: 0, z: 0}
-  maxCameraPosition: {x: 10, y: 0, z: 0}
+  maxCameraPosition: {x: 33, y: 0, z: 0}
 --- !u!1001 &525966905
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5807,6 +5807,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1195482000}
+  - component: {fileID: 1195482001}
   m_Layer: 0
   m_Name: Gamemanager
   m_TagString: Untagged
@@ -5829,6 +5830,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1195482001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1195481999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aebebb21c0681ac43b7d31968e313471, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monedas: 0
+  tiempoEsperaGameOver: 1.5
+  escenaGameOver: GameOver
 --- !u!1001 &1209871601
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15136,7 +15152,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPosition: {x: 0, y: 0, z: 0}
   movementSpeed: 5
-  jumpForce: 1
+  jumpForce: 10
   vidasMaximas: 3
   limiteCaida: -10
   puntoAtaque: {fileID: 0}
@@ -15535,6 +15551,10 @@ PrefabInstance:
       propertyPath: sonidoAbrirPuerta
       value: 
       objectReference: {fileID: 8300000, guid: c772926e0fa56a24f9f320c032facf47, type: 3}
+    - target: {fileID: 1015258104339646787, guid: b2caa6b8d1c121b48bda2bf57e6fa53c, type: 3}
+      propertyPath: m_SortingOrder
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 1324363793791739644, guid: b2caa6b8d1c121b48bda2bf57e6fa53c, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.5380293

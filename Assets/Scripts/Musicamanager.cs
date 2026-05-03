@@ -1,7 +1,5 @@
 using UnityEngine;
  
-// Coloca este script en un GameObject vacío llamado "MusicaManager".
-// Añádele un AudioSource en el mismo objeto.
  
 public class MusicaManager : MonoBehaviour
 {
@@ -9,11 +7,9 @@ public class MusicaManager : MonoBehaviour
  
     private AudioSource audioSource;
  
-    [Header("Clips de música")]
     public AudioClip musicaNivel;
     public AudioClip musicaGameOver;
  
-    [Header("Ajustes")]
     [Range(0f, 1f)] public float volumen = 0.5f;
  
     private void Awake()

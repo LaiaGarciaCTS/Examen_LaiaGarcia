@@ -1,72 +1,128 @@
 ﻿using UnityEngine;
 
-// =====================================================================
+
+
 //  PUERTA
-//  Necesita DOS Collider2D:
-//    1. Sin Is Trigger  → pared física
-//    2. Con Is Trigger  → zona de detección
-//
-//  Animator con:
-//    - Estado por defecto: "Cerrada" (animación estática, SIN loop)
-//    - Trigger "Abrir" → transición a animación de apertura (SIN loop)
-// =====================================================================
+
 public class Puerta : MonoBehaviour
 {
-    [Header("Sonido")]
     public AudioClip sonidoAbrirPuerta;
  
-    [Header("Siguiente nivel")]
     public string nombreSiguienteEscena = "Nivel2";
  
-    [Header("Componentes")]
     public Animator animator;
  
-    private Collider2D colisionFisica;
-    private AudioSource audioSource;
-    private bool estaAbierta = false;
+    public float duracionAnimacionAbriendo = 1f;
  
+    //  PRIVADO
+    private AudioSource audioSource;
+    private bool jugadorCerca = false;
+    private bool estaAbierta  = false;
+    private bool abriendo     = false;
+ 
+    //  AWAKE
     void Awake()
     {
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
             audioSource = gameObject.AddComponent<AudioSource>();
  
-        foreach (Collider2D col in GetComponents<Collider2D>())
+        if (animator == null)
+            animator = GetComponent<Animator>();
+    }
+ 
+    //  UPDATE
+    void Update()
+    {
+        if (!jugadorCerca) return;
+        if (abriendo) return;
+ 
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
-            if (!col.isTrigger) { colisionFisica = col; break; }
+            if (estaAbierta)
+            {
+                PasarAlSiguienteNivel();
+                return;
+            }
+ 
+            if (GameManager.Instancia == null)
+            {
+                Debug.LogError("PUERTA: GameManager.Instancia es NULL al pulsar arriba.");
+                return;
+            }
+ 
+            Debug.Log("PUERTA: Arriba pulsado. TieneLlave = " + GameManager.Instancia.TieneLlave());
+ 
+            if (GameManager.Instancia.TieneLlave())
+                IniciarApertura();
+            else
+                Debug.Log("PUERTA: No tienes la llave.");
         }
     }
  
+    //  TRIGGER
     void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
+        jugadorCerca = true;
  
-        if (!estaAbierta)
-        {
-            if (GameManager.Instancia != null && GameManager.Instancia.TieneLlave())
-                AbrirPuerta();
-            else
-                Debug.Log("Necesitas la llave para abrir esta puerta.");
-        }
-        else
-        {
-            PasarAlSiguienteNivel();
-        }
+        bool llave = GameManager.Instancia != null && GameManager.Instancia.TieneLlave();
+        Debug.Log("PUERTA: Jugador entro en la zona. TieneLlave = " + llave);
     }
  
-    void AbrirPuerta()
+    void OnTriggerExit2D(Collider2D other)
     {
-        estaAbierta = true;
+        if (other.CompareTag("Player"))
+            jugadorCerca = false;
+    }
  
-        if (colisionFisica != null) colisionFisica.enabled = false;
+    //  INICIAR APERTURA
+    void IniciarApertura()
+    {
+        abriendo = true;
+ 
+        int desactivados = 0;
+        foreach (Collider2D col in GetComponentsInChildren<Collider2D>())
+        {
+            if (!col.isTrigger)
+            {
+                col.enabled = false;
+                desactivados++;
+                Debug.Log("PUERTA: Collider fisico desactivado en → " + col.gameObject.name);
+            }
+        }
+ 
+        if (desactivados == 0)
+            Debug.LogWarning("PUERTA: No se encontro ningun collider fisico (non-trigger). " +
+                "Asegurate de tener un Collider2D con Is Trigger = OFF en la puerta.");
+ 
         if (audioSource != null && sonidoAbrirPuerta != null)
             audioSource.PlayOneShot(sonidoAbrirPuerta);
-        if (animator != null) animator.SetTrigger("Abrir");
-        if (GameManager.Instancia != null) GameManager.Instancia.UsarLlave();
  
-        Debug.Log("¡Puerta abierta!");
+        if (animator != null)
+            animator.SetBool("Abriendo", true);
+ 
+        GameManager.Instancia.UsarLlave();
+ 
+        Invoke(nameof(TerminarApertura), duracionAnimacionAbriendo);
     }
  
+    //  TERMINAR APERTURA
+    void TerminarApertura()
+    {
+        estaAbierta = true;
+        abriendo    = false;
+ 
+        if (animator != null)
+        {
+            animator.SetBool("Abriendo", false);
+            animator.SetBool("Abierta",  true);
+        }
+ 
+        Debug.Log("PUERTA: Completamente abierta. Pulsa arriba para entrar.");
+    }
+ 
+    //  SIGUIENTE NIVEL
     void PasarAlSiguienteNivel()
     {
         if (GameManager.Instancia != null)
