@@ -9,76 +9,61 @@ public class GameManager : MonoBehaviour
     [Header("Puntuacion")]
     public int monedas = 0;
  
-    [Header("Game Over")]
-    public float tiempoEsperaGameOver = 1.5f;
+    [Header("Escenas")]
+    public string escenaVictoria = "Victoria";
     public string escenaGameOver = "GameOver";
  
     private bool tieneLlave = false;
  
-    //  SINGLETON
     void Awake()
     {
-        if (Instancia != null && Instancia != this)
-        {
-            Debug.LogWarning("GAMEMANAGER: ya existe una instancia, destruyendo duplicado en " + gameObject.name);
-            Destroy(gameObject);
-            return;
-        }
+        if (Instancia != null && Instancia != this) { Destroy(gameObject); return; }
         Instancia = this;
-        Debug.Log("GAMEMANAGER: instancia creada correctamente en " + gameObject.name);
     }
  
+    // ------------------------------------------------------------------
     //  MONEDAS
+    // ------------------------------------------------------------------
     public void AñadirMoneda(int valor)
     {
         monedas += valor;
-        Debug.Log("GAMEMANAGER: Monedas = " + monedas);
         UIManager.Instancia?.ActualizarMonedas(monedas);
     }
  
+    // ------------------------------------------------------------------
     //  LLAVE
+    // ------------------------------------------------------------------
     public void RecogerLlave()
     {
         tieneLlave = true;
-        Debug.Log("GAMEMANAGER: Llave recogida. tieneLlave = " + tieneLlave);
+        Debug.Log("GAMEMANAGER: Llave recogida.");
     }
  
-    public bool TieneLlave()
-    {
-        Debug.Log("GAMEMANAGER: TieneLlave consultado = " + tieneLlave);
-        return tieneLlave;
-    }
+    public bool TieneLlave() => tieneLlave;
  
     public void UsarLlave()
     {
         tieneLlave = false;
-        Debug.Log("GAMEMANAGER: Llave usada. tieneLlave = " + tieneLlave);
+        Debug.Log("GAMEMANAGER: Llave usada.");
     }
  
-    //  SIGUIENTE NIVEL
+    // ------------------------------------------------------------------
+    //  VICTORIA — para música y carga escena de victoria directamente
+    // ------------------------------------------------------------------
     public void CargarSiguienteNivel(string nombreEscena)
     {
-        if (!string.IsNullOrEmpty(nombreEscena))
-            SceneManager.LoadScene(nombreEscena);
-        else
-            Debug.LogWarning("GAMEMANAGER: No hay escena asignada en la Puerta.");
+        MusicaManager.Instancia?.PararMusica();
+        MusicaManager.Instancia?.ReproducirVictoria();
+        SceneManager.LoadScene(escenaVictoria);
     }
  
-    //  GAME OVER
+    // ------------------------------------------------------------------
+    //  GAME OVER — para música y carga escena de game over directamente
+    // ------------------------------------------------------------------
     public void GameOver()
     {
-        Debug.Log("GAMEMANAGER: GAME OVER");
         MusicaManager.Instancia?.PararMusica();
         MusicaManager.Instancia?.ReproducirGameOver();
-        Invoke(nameof(CargarGameOver), tiempoEsperaGameOver);
-    }
- 
-    void CargarGameOver()
-    {
-        SceneManager.LoadScene(
-            !string.IsNullOrEmpty(escenaGameOver)
-                ? escenaGameOver
-                : SceneManager.GetActiveScene().name
-        );
+        SceneManager.LoadScene(escenaGameOver);
     }
 }
