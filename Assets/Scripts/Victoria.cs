@@ -1,23 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
  
-// =====================================================================
-//  VICTORIA
-//
-//  Colocar este script en el GameObject "PanelVictoria" (dentro del Canvas).
-//  El panel empieza DESACTIVADO. El UIManager lo activa al ganar.
-//
-//  En el Inspector conectar botones:
-//    Boton "Next Level" → OnClick() → Victoria.NextLevel()
-//    Boton "Menu"       → OnClick() → Victoria.Menu()
-//
-//  Asignar en Inspector:
-//    - sonidoBoton → AudioClip que suena al pulsar cualquier botón
-// =====================================================================
- 
 public class Victoria : MonoBehaviour
 {
-    [Header("Nombres de escenas")]
+    [Header("Nombres exactos de escenas")]
     public string nombreSiguienteEscena = "Nivel2";
     public string nombreEscenaMenu      = "MenuPrincipal";
  
@@ -34,7 +20,6 @@ public class Victoria : MonoBehaviour
  
     void OnEnable()
     {
-        // Pausa el juego al mostrar la victoria
         Time.timeScale = 0f;
     }
  
@@ -43,20 +28,34 @@ public class Victoria : MonoBehaviour
         Time.timeScale = 1f;
     }
  
-    // Boton "Next Level"
     public void NextLevel()
     {
         ReproducirSonido();
         Time.timeScale = 1f;
-        SceneManager.LoadScene(nombreSiguienteEscena);
+        Invoke(nameof(CargarSiguiente), 0.15f);
     }
  
-    // Boton "Menu"
     public void Menu()
     {
         ReproducirSonido();
         Time.timeScale = 1f;
-        SceneManager.LoadScene(nombreEscenaMenu);
+        Invoke(nameof(CargarMenu), 0.15f);
+    }
+ 
+    void CargarSiguiente()
+    {
+        if (Application.CanStreamedLevelBeLoaded(nombreSiguienteEscena))
+            SceneManager.LoadScene(nombreSiguienteEscena);
+        else
+            Debug.LogError("VICTORIA: Escena '" + nombreSiguienteEscena + "' no encontrada en Build Settings.");
+    }
+ 
+    void CargarMenu()
+    {
+        if (Application.CanStreamedLevelBeLoaded(nombreEscenaMenu))
+            SceneManager.LoadScene(nombreEscenaMenu);
+        else
+            Debug.LogError("VICTORIA: Escena '" + nombreEscenaMenu + "' no encontrada en Build Settings.");
     }
  
     void ReproducirSonido()

@@ -3,23 +3,33 @@ using UnityEngine.InputSystem;
  
 //  PLAYER CONTROLLER
  
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(AudioSource))]
 public class PlayerController : MonoBehaviour
 {
-    //  VARIABLES PÚBLICAS
-    public Vector3 startPosition;
+    [Header("Movimiento")]
     public float movementSpeed = 5f;
     public float jumpForce = 10f;
  
+    [Header("Posicion inicial")]
+    public Vector3 startPosition;
+ 
+    [Header("Salud")]
     public int vidasMaximas = 3;
  
+    [Header("Limite de caida — ajustar en Inspector")]
     public float limiteCaida = -10f;
  
+    [Header("Ataque")]
     public Transform puntoAtaque;
     public float radioAtaque = 0.5f;
-    public int dañoAtaque = 1;
+    public int danioAtaque = 1;
     public LayerMask capaEnemigos;
     public float cooldownAtaque = 0.4f;
  
+    [Header("Sonidos")]
     public AudioClip sonidoSalto;
     public AudioClip sonidoMuerte;
     public AudioClip sonidoDaño;
@@ -27,9 +37,9 @@ public class PlayerController : MonoBehaviour
     public AudioClip sonidoMoneda;
     public AudioClip sonidoLlave;
  
-    //  VARIABLES PRIVADAS
+    //  PRIVADO
     private Rigidbody2D rBody2D;
-    private SpriteRenderer renderer;
+    private SpriteRenderer sr;
     private Animator animator;
     private AudioSource _audioSource;
     private GroundSensor sensor;
@@ -48,7 +58,7 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         rBody2D      = GetComponent<Rigidbody2D>();
-        renderer     = GetComponent<SpriteRenderer>();
+        sr           = GetComponent<SpriteRenderer>();
         animator     = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
         sensor       = GetComponentInChildren<GroundSensor>();
@@ -62,6 +72,11 @@ public class PlayerController : MonoBehaviour
     {
         transform.position = startPosition;
         vidasActuales = vidasMaximas;
+        UIManager.Instancia?.ActualizarVidas(vidasActuales);
+ 
+        Debug.Log("PLAYER: limiteCaida = " + limiteCaida +
+            " | Posicion inicial Y = " + startPosition.y +
+            " | Ajusta limiteCaida en el Inspector si hace falta.");
     }
  
     //  UPDATE
@@ -71,65 +86,51 @@ public class PlayerController : MonoBehaviour
  
         timerAtaque -= Time.deltaTime;
  
+        // Movimiento
         moveDirection = moveAction.ReadValue<Vector2>();
  
-        if (moveDirection.x > 0)
-        {
-            renderer.flipX = false;
-            animator.SetBool("IsRunning", true);
-        }
-        else if (moveDirection.x < 0)
-        {
-            renderer.flipX = true;
-            animator.SetBool("IsRunning", true);
-        }
-        else
-        {
-            animator.SetBool("IsRunning", false);
-        }
+        if (moveDirection.x > 0)      { sr.flipX = false; animator.SetBool("IsRunning", true); }
+        else if (moveDirection.x < 0) { sr.flipX = true;  animator.SetBool("IsRunning", true); }
+        else                          { animator.SetBool("IsRunning", false); }
  
-        //  SALTO
+        // Salto
         if (jumpAction.WasPressedThisFrame() && sensor.IsGrounded())
         {
-            rBody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            rBody2D.linearVelocity = new Vector2(rBody2D.linearVelocity.x, jumpForce);
             ReproducirSonido(sonidoSalto);
         }
  
-        // Animación salto
         animator.SetBool("IsJumping", !sensor.IsGrounded());
  
-        // Ataque con Z
+        // Ataque
         if (Input.GetKeyDown(KeyCode.Z) && timerAtaque <= 0f)
         {
             timerAtaque = cooldownAtaque;
             ReproducirSonido(sonidoAtaque);
- 
             if (puntoAtaque != null)
             {
-                Collider2D[] golpeados = Physics2D.OverlapCircleAll(
-                    puntoAtaque.position, radioAtaque, capaEnemigos);
- 
+                Collider2D[] golpeados = Physics2D.OverlapCircleAll(puntoAtaque.position, radioAtaque, capaEnemigos);
                 foreach (Collider2D col in golpeados)
-                {
-                    EnemyController ec = col.GetComponent<EnemyController>();
-                    if (ec != null) ec.RecibirDaño(dañoAtaque);
-                }
+                    col.GetComponent<EnemyController>()?.RecibirDaño(danioAtaque);
             }
         }
  
-        // Muerte por caída
+        // Caída al vacío — debug para ver el Y actual en consola mientras cae
         if (transform.position.y < limiteCaida)
+        {
+            Debug.Log("PLAYER: Caída detectada en Y=" + transform.position.y + " | Llamando a Morir()");
             Morir();
+        }
  
-        // Parpadeo invulnerabilidad
+        // Invulnerabilidad
         if (esInvulnerable)
         {
             timerInvulnerabilidad -= Time.deltaTime;
-            renderer.enabled = (Mathf.Sin(Time.time * 20f) > 0f);
+            sr.enabled = (Mathf.Sin(Time.time * 20f) > 0f);
             if (timerInvulnerabilidad <= 0f)
             {
                 esInvulnerable = false;
-                renderer.enabled = true;
+                sr.enabled = true;
             }
         }
     }
@@ -138,9 +139,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         if (estaMuerto) return;
-        rBody2D.linearVelocity = new Vector2(
-            moveDirection.x * movementSpeed,
-            rBody2D.linearVelocity.y);
+        rBody2D.linearVelocity = new Vector2(moveDirection.x * movementSpeed, rBody2D.linearVelocity.y);
     }
  
     //  API PÚBLICA
@@ -150,6 +149,7 @@ public class PlayerController : MonoBehaviour
  
         vidasActuales -= cantidad;
         ReproducirSonido(sonidoDaño);
+        UIManager.Instancia?.ActualizarVidas(vidasActuales);
  
         if (vidasActuales <= 0)
             Morir();
@@ -165,13 +165,24 @@ public class PlayerController : MonoBehaviour
         if (estaMuerto) return;
         estaMuerto = true;
  
+        Debug.Log("PLAYER: Morir() ejecutado.");
+ 
         ReproducirSonido(sonidoMuerte);
         rBody2D.linearVelocity = Vector2.zero;
         rBody2D.bodyType = RigidbodyType2D.Kinematic;
         animator.SetTrigger("Morir");
-        renderer.enabled = true;
+        sr.enabled = true;
  
-        GameManager.Instancia?.GameOver();
+        if (GameManager.Instancia != null)
+        {
+            Debug.Log("PLAYER: Llamando a GameManager.GameOver()");
+            GameManager.Instancia.GameOver();
+        }
+        else
+        {
+            Debug.LogError("PLAYER: GameManager.Instancia es NULL. " +
+                "Comprueba que hay un GameObject GameManager en la escena con el script GameManager.cs");
+        }
     }
  
     public void ReproducirSonidoMoneda() => ReproducirSonido(sonidoMoneda);

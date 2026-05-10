@@ -1,25 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
  
-// =====================================================================
-//  GAME OVER — escena completa
-//
-//  Colocar en un GameObject vacío en la escena "GameOver".
-//  Fondo con color (Image que cubra toda la pantalla).
-//
-//  En el Inspector conectar botones:
-//    Boton "Retry"  → OnClick() → GameOverScene.Retry()
-//    Boton "Menu"   → OnClick() → GameOverScene.Menu()
-//
-//  Asignar:
-//    - sonidoBoton     → AudioClip que suena al pulsar cualquier botón
-//    - musicaDerrota   → AudioClip de música de derrota (si no usa MusicaManager)
-// =====================================================================
- 
 public class GameOverScene : MonoBehaviour
 {
-    [Header("Nombres de escenas")]
-    public string nombreEscenaNivel = "Nivel1";
+    [Header("Nombres exactos de escenas")]
+    public string nombreEscenaNivel = "Nivel2";
     public string nombreEscenaMenu  = "MenuPrincipal";
  
     [Header("Sonido boton")]
@@ -35,24 +20,35 @@ public class GameOverScene : MonoBehaviour
  
     void Start()
     {
-        // Si el MusicaManager persiste entre escenas, reproduce la música de derrota
-        // (ya se llamó ReproducirGameOver() desde el GameManager antes de cambiar de escena)
-        // Si no hay MusicaManager, puedes asignar un AudioSource con tu música aquí
-        Time.timeScale = 1f; // por si venía pausado
+        Time.timeScale = 1f;
     }
  
-    // Boton "Retry"
     public void Retry()
     {
         ReproducirSonido();
-        SceneManager.LoadScene(nombreEscenaNivel);
+        Invoke(nameof(CargarNivel), 0.15f);
     }
  
-    // Boton "Menu"
     public void Menu()
     {
         ReproducirSonido();
-        SceneManager.LoadScene(nombreEscenaMenu);
+        Invoke(nameof(CargarMenu), 0.15f);
+    }
+ 
+    void CargarNivel()
+    {
+        if (Application.CanStreamedLevelBeLoaded(nombreEscenaNivel))
+            SceneManager.LoadScene(nombreEscenaNivel);
+        else
+            Debug.LogError("GAMEOVER: Escena '" + nombreEscenaNivel + "' no encontrada en Build Settings.");
+    }
+ 
+    void CargarMenu()
+    {
+        if (Application.CanStreamedLevelBeLoaded(nombreEscenaMenu))
+            SceneManager.LoadScene(nombreEscenaMenu);
+        else
+            Debug.LogError("GAMEOVER: Escena '" + nombreEscenaMenu + "' no encontrada en Build Settings.");
     }
  
     void ReproducirSonido()

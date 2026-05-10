@@ -9,30 +9,32 @@ public class GameManager : MonoBehaviour
     [Header("Puntuacion")]
     public int monedas = 0;
  
-    [Header("Escenas")]
-    public string escenaVictoria = "Victoria";
-    public string escenaGameOver = "GameOver";
+    [Header("Nombres exactos de las escenas — deben coincidir con los archivos .unity")]
+    public string escenaNivel      = "Nivel2";
+    public string escenaVictoria   = "Victoria";
+    public string escenaGameOver   = "GameOver";
+    public string escenaMenu       = "MenuPrincipal";
+ 
+    [Header("Tiempo espera antes de cargar Game Over (segundos)")]
+    public float tiempoEsperaGameOver = 1.5f;
  
     private bool tieneLlave = false;
  
+    //  SINGLETON
     void Awake()
     {
         if (Instancia != null && Instancia != this) { Destroy(gameObject); return; }
         Instancia = this;
     }
  
-    // ------------------------------------------------------------------
     //  MONEDAS
-    // ------------------------------------------------------------------
     public void AñadirMoneda(int valor)
     {
         monedas += valor;
         UIManager.Instancia?.ActualizarMonedas(monedas);
     }
  
-    // ------------------------------------------------------------------
     //  LLAVE
-    // ------------------------------------------------------------------
     public void RecogerLlave()
     {
         tieneLlave = true;
@@ -47,23 +49,42 @@ public class GameManager : MonoBehaviour
         Debug.Log("GAMEMANAGER: Llave usada.");
     }
  
-    // ------------------------------------------------------------------
-    //  VICTORIA — para música y carga escena de victoria directamente
-    // ------------------------------------------------------------------
+    //  VICTORIA
     public void CargarSiguienteNivel(string nombreEscena)
     {
         MusicaManager.Instancia?.PararMusica();
         MusicaManager.Instancia?.ReproducirVictoria();
-        SceneManager.LoadScene(escenaVictoria);
+        CargarEscena(escenaVictoria);
     }
  
-    // ------------------------------------------------------------------
-    //  GAME OVER — para música y carga escena de game over directamente
-    // ------------------------------------------------------------------
+    //  GAME OVER
     public void GameOver()
     {
+        Debug.Log("GAMEMANAGER: GAME OVER — cargando escena: " + escenaGameOver);
         MusicaManager.Instancia?.PararMusica();
         MusicaManager.Instancia?.ReproducirGameOver();
-        SceneManager.LoadScene(escenaGameOver);
+        Invoke(nameof(CargarEscenaGameOver), tiempoEsperaGameOver);
+    }
+ 
+    void CargarEscenaGameOver()
+    {
+        CargarEscena(escenaGameOver);
+    }
+ 
+    //  METODO CENTRAL para cargar escenas — con debug si falla
+    void CargarEscena(string nombre)
+    {
+        Debug.Log("GAMEMANAGER: Intentando cargar escena '" + nombre + "'");
+ 
+        // Comprueba si la escena existe en Build Settings
+        if (Application.CanStreamedLevelBeLoaded(nombre))
+        {
+            SceneManager.LoadScene(nombre);
+        }
+        else
+        {
+            Debug.LogError("GAMEMANAGER: La escena '" + nombre + "' NO está en Build Settings. " +
+                "Ve a File → Build Settings y añádela, o comprueba que el nombre coincide exactamente con el archivo .unity");
+        }
     }
 }

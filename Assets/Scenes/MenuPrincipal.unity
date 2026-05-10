@@ -404,6 +404,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textMonedas: {fileID: 1214889122}
+  iconosVida: []
+  barraVidaFill: {fileID: 0}
   textVidas: {fileID: 1087417230}
 --- !u!1 &121761304
 GameObject:
@@ -5175,7 +5177,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.009714603, y: -0.65569293}
+  m_Offset: {x: -0.039895535, y: -0.66265774}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -5185,7 +5187,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.8640051, y: 0.5628717}
+  m_Size: {x: 0.70149136, y: 0.33535242}
   m_EdgeRadius: 0
 --- !u!114 &1100575310
 MonoBehaviour:
@@ -5843,8 +5845,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monedas: 0
-  tiempoEsperaGameOver: 1.5
+  escenaVictoria: Victoria
   escenaGameOver: GameOver
+  tiempoEsperaGameOver: 1.5
 --- !u!1001 &1209871601
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6313,7 +6316,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2915749659840843559, guid: 44ecf4b3c3ea8cd4184ad2ccfcfb1203, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 40.197502
+      value: 38.32
       objectReference: {fileID: 0}
     - target: {fileID: 2915749659840843559, guid: 44ecf4b3c3ea8cd4184ad2ccfcfb1203, type: 3}
       propertyPath: m_LocalPosition.y
@@ -14288,6 +14291,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicaNivel: {fileID: 8300000, guid: 6db6b3f2a24f5364fb7998838515d391, type: 3}
   musicaGameOver: {fileID: 8300000, guid: 9f3f3cb186b796d43ac5828d571dac4d, type: 3}
+  musicaVictoria: {fileID: 8300000, guid: 1aeafa7f9fdd4184588608601ad66c21, type: 3}
   volumen: 0.5
 --- !u!82 &2041465889
 AudioSource:
@@ -15150,14 +15154,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 469926f582977a443bbf2d1596f31dd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPosition: {x: 0, y: 0, z: 0}
   movementSpeed: 5
   jumpForce: 10
+  startPosition: {x: 0, y: 0, z: 0}
   vidasMaximas: 3
   limiteCaida: -10
   puntoAtaque: {fileID: 0}
   radioAtaque: 0.5
-  "da\xF1oAtaque": 1
+  danioAtaque: 1
   capaEnemigos:
     serializedVersion: 2
     m_Bits: 0
@@ -15426,7 +15430,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5044592423297328484, guid: 0d6c85e13da8ab049b28f75eb4a3b046, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 42.34
+      value: 40.462498
       objectReference: {fileID: 0}
     - target: {fileID: 5044592423297328484, guid: 0d6c85e13da8ab049b28f75eb4a3b046, type: 3}
       propertyPath: m_LocalPosition.y
