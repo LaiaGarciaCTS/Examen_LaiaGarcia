@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
- 
+using System.Collections.Generic;
+
+
 [DefaultExecutionOrder(-100)]
 public class GameManager : MonoBehaviour
 {
@@ -87,4 +89,25 @@ public class GameManager : MonoBehaviour
                 "Ve a File → Build Settings y añádela, o comprueba que el nombre coincide exactamente con el archivo .unity");
         }
     }
-}
+
+    //EXAMEN
+
+    public List<GameObject> enemiesInScreen;
+
+    void Update
+    {
+	    if(Input.GetKeyDown(KeyCode.K))
+	    {
+		    KillEnemiesInScreen();
+	    }
+    }
+
+    void KillEnemiesInScreen()
+    {
+	    foreach (GameObject enemy in enemiesInScreen)
+	    {
+		    Destroy(enemy);
+	    }
+    }
+
+    }

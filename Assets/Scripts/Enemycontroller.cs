@@ -184,4 +184,22 @@ public class EnemyController : MonoBehaviour
             Gizmos.DrawSphere(puntoB.position, 0.1f);
         }
     }
+
+    //EXAMEN
+    GameManager _gameManager;
+
+    void Awake()
+    {
+        _gameManager.GameObject.Find("GameManager").GetComponent<GameManager>()
+    }
+
+    void OnBecameVisible()
+    {
+        _gameManager.EnemiesInScreen.Add(GameObject);
+    }
+
+    void OnBecameInvisible()
+    {
+        _gameManager.EnemiesInScreen.Remove(GameObject);
+    }
 }
